@@ -6,3 +6,4 @@ pycurl==7.43.0.2
 PyYAML==3.13
 responses==0.9.0
 sqlparse==0.2.4
+ipdb==0.11
