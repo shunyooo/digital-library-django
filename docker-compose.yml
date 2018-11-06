@@ -1,0 +1,31 @@
+version: '3.7'
+
+volumes:
+  library.db.volume:
+    name: library.db.volume
+
+services:
+  db:
+    image: mysql:5.7.21
+    container_name: library.db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - library.db.volume:/var/lib/mysql
+      - ./etc/sql:/docker-entrypoint-initdb.d
+
+  web:
+    build: ./etc/web
+    container_name: library.web
+    command: ./manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./library:/app
+      - ./static:/static
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
