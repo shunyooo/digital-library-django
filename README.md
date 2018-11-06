@@ -25,3 +25,16 @@ $ sh bin/docker-compose-build-run.sh
 ```
 $ docker-compose exec web bash
 ```
+
+
+
+## DEBUG
+
+以下をコード中に挟む。[コマンド参考](https://qiita.com/makopo/items/170c939c79dcc5c89e12#ipdb%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E4%B8%80%E8%A6%A7)
+
+```python
+import ipdb; ipdb.set_trace();
+```
+
+
+
