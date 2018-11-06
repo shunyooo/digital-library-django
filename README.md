@@ -17,11 +17,11 @@
 
 ```shell
 $ cd degital-library
-$ docker-compose up
+$ sh bin/docker-compose-build-run.sh
 ```
 
 ## ATTACH CONTAINER
 
 ```
-$ docker-compose exec api bash
+$ docker-compose exec web bash
 ```
