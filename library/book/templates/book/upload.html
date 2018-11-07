@@ -1,0 +1,52 @@
+{% extends 'book/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form method="post" id="myform" enctype="multipart/form-data">
+    <div id="extra-form">
+        <table id="form-table" class="table table-hover table-stripe">
+            <th>本タイトル</th>
+        </table>
+    </div>
+    <label>
+    <span class="btn btn-primary">
+        Choose File
+        <input type="file" style="display:none" name="file_field" multiple="multiple">
+    </span>
+    </label>
+    <input type="submit" class="btn btn-default" value="送信する">
+    {% csrf_token %}
+</form>
+
+<!--<form action="/file-upload"-->
+<!--class="dropzone"-->
+<!--id="my-awesome-dropzone"></form>-->
+
+
+{% endblock %}
+
+{% block extrajs %}
+<!--TODO: DROPZONEの導入-->
+<script src="{% static 'lib/dropzone.js' %}"></script>
+
+<script type="text/javascript">
+    const $table = $('#form-table')
+    $('input[name="file_field"]').change(function () {
+        $table.find('td').remove()
+        const files = $(this).prop('files');
+        console.log('selected: ', files);
+        for (const f of files) {
+            $table.append('<tr><td>' + f.name + '</td></tr>');
+        }
+    });
+</script>
+{% endblock %}
+
+{% block extracss %}
+<style>
+    textarea:focus, input:focus {
+        outline: none;
+    }
+</style>
+{% endblock %}
