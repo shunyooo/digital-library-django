@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -26,7 +26,6 @@ SECRET_KEY = 'n0j-w-q4a**0x^-b=c9n&ad3k_o6yr(y2*_)b7db0zea5uaz=z'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -70,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'library.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -87,7 +85,6 @@ DATABASES = {
         },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -107,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -121,7 +117,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -130,3 +125,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# For debugging
+if DEBUG:
+    # will output to your console
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(levelname)s %(message)s',
+    )
+else:
+    # will output to logging file
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(levelname)s %(message)s',
+        filename='/my_log_file.log',
+        filemode='a'
+    )

@@ -2,3 +2,5 @@ static/*
 .idea/*
 
 *.pyc
+*.ipynb
+*.pdf

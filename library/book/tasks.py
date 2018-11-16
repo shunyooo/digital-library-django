@@ -37,9 +37,8 @@ def handle_uploaded_file(f, author_name=None, category=None):
         # TODO: APIより書籍情報を集める
 
     except Exception as e:
-        import traceback
-        traceback.print_exc()
-
+        raise Exception(e.args)
+        # print("例外args:", e.args)
 
 PdfInfo = namedtuple('PdfInfo', ('title', 'page_count'))
 

@@ -3,36 +3,160 @@
 
 {% block content %}
 
-<form method="post" id="myform" enctype="multipart/form-data">
-    <div id="extra-form">
-        <table id="form-table" class="table table-hover table-stripe">
-            <th>本タイトル</th>
-        </table>
+<div class="row" style="margin-top: 30px">
+    <div class="col s12">
+
+        <!-- Uploader Dropzone -->
+        <form id="zdrop" class="fileuploader ">
+            {% csrf_token %}
+            <div id="upload-label" style="width: 300px;">
+                <i class="material-icons">cloud_upload</i>
+                <span class="title">Drag your Books here</span>
+                <span>ここにPDFをドラッグしてください </span>
+            </div>
+        </form>
+
+        <!-- Preview collection of uploaded documents -->
+        <div class="preview-container">
+            <div class="header">
+                <span>Uploaded Files</span>
+                <!--<i id="close" class="material-icons">close</i>-->
+                <i id="controller" class="material-icons">keyboard_arrow_down</i>
+            </div>
+            <div class="collection card" id="previews">
+                <div class="collection-item clearhack valign-wrapper item-template" id="zdrop-template">
+                    <div class="left pv zdrop-info" data-dz-thumbnail>
+                        <div class="progress">
+                            <div class="determinate" style="width:0" data-dz-uploadprogress></div>
+                            <div class="progress-text"></div>
+                        </div>
+                        <div class="zdrop-info-text">
+                            <span data-dz-name></span> <span data-dz-size></span>
+                            <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                        </div>
+                        <div class="secondary-content actions">
+                            <span class="ph white-text waves-effect waves-light">
+                                <i class="material-icons dz-info-icon">
+                                </i>
+                            </span>
+                            <!--<a href="#!" data-dz-remove class="btn-floating ph red white-text waves-effect waves-light"><i-->
+                            <!--class="material-icons white-text">clear</i></i></a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <label>
-    <span class="btn btn-primary">
-        Choose File
-        <input type="file" style="display:none" name="file_field" multiple="multiple">
-    </span>
-    </label>
-    <input type="submit" class="btn btn-default" value="送信する">
-    {% csrf_token %}
-</form>
-
-<!--<form action="/file-upload"-->
-<!--class="dropzone"-->
-<!--id="my-awesome-dropzone"></form>-->
-
+</div>
 
 {% endblock %}
 
 {% block extrajs %}
 <!--TODO: DROPZONEの導入-->
-<script src="{% static 'lib/dropzone.js' %}"></script>
+<script src="{% static 'lib/js/dropzone.js' %}"></script>
+<script src="{% static 'lib/js/materialize.js' %}"></script>
+
 
 <script type="text/javascript">
+    $(document).ready(function () {
+
+        initFileUploader("#zdrop");
+
+        function initFileUploader(target) {
+            var previewNode = document.querySelector("#zdrop-template");
+            previewNode.id = "";
+            var previewTemplate = previewNode.parentNode.innerHTML;
+            previewNode.parentNode.removeChild(previewNode);
+
+
+            zdrop = new Dropzone(target, {
+                url: '#',
+                previewTemplate: previewTemplate,
+                autoQueue: true,
+                previewsContainer: "#previews",
+                clickable: "#upload-label",
+            });
+
+            zdrop.on("addedfile", function (file) {
+                console.log('addedfile', file);
+                $('.preview-container').css('visibility', 'visible');
+            });
+
+
+            zdrop.on("uploadprogress", function (e) {
+                console.log('uploadprogress', e);
+                setProgressbar(e);
+
+            });
+
+            function setProgressbar(e) {
+                const progr_int = parseInt(e.upload.progress);
+                const progr = e.previewElement.querySelector(".progress .determinate");
+                if (progr === undefined || progr === null)
+                    return;
+                progr.style.width = progr_int + "%";
+                const $progr_text = $(e.previewElement.querySelector(".progress .progress-text"));
+                console.log('progr_text', $progr_text)
+                $progr_text.text(progr_int);
+            }
+
+            zdrop.on('dragenter', function () {
+                $('.fileuploader').addClass("active");
+            });
+
+            zdrop.on('dragleave', function () {
+                $('.fileuploader').removeClass("active");
+            });
+
+            zdrop.on('drop', function () {
+                $('.fileuploader').removeClass("active");
+            });
+
+            zdrop.on('success', function (e) {
+                console.log('success', e);
+                const dt_el = e.previewElement.querySelector(".dz-info-icon");
+                const $dt_el = $(dt_el)
+                $dt_el.text('check')
+                $dt_el.css('color', 'blue');
+                // $dt_el.clear();
+                // $df_el.set()
+                // $dt_el.css('visibility','hidden');
+            });
+
+            zdrop.on('error', function (e) {
+                console.log('error', e);
+                const dt_el = e.previewElement.querySelector(".dz-info-icon");
+                const $dt_el = $(dt_el)
+                $dt_el.text('close')
+                $dt_el.css('color', 'red');
+            });
+
+            var toggle = true;
+            /* Preview controller of hide / show */
+            $('#controller').click(function () {
+                if (toggle) {
+                    $('#previews').css('visibility', 'hidden');
+                    $('#controller').html("keyboard_arrow_up");
+                    $('#previews').css('height', '0px');
+                    toggle = false;
+                } else {
+                    $('#previews').css('visibility', 'visible');
+                    $('#controller').html("keyboard_arrow_down");
+                    $('#previews').css('height', 'initial');
+                    toggle = true;
+                }
+            });
+            /* Close controller */
+            $('#close').click(function () {
+                $('.preview-container').css('visibility', 'hidden');
+            });
+        }
+
+    });
+
+
     const $table = $('#form-table')
-    $('input[name="file_field"]').change(function () {
+    $('input[name="file"]').change(function () {
         $table.find('td').remove()
         const files = $(this).prop('files');
         console.log('selected: ', files);
@@ -44,6 +168,11 @@
 {% endblock %}
 
 {% block extracss %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'lib/css/dropzone.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'lib/css/materialize.css' %}"/>
+
+
 <style>
     textarea:focus, input:focus {
         outline: none;
