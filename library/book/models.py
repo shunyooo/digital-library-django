@@ -4,7 +4,7 @@ from django.db import models
 def default_category():
     """デフォルトのカテゴリを返す(まだなければ作る)."""
     category, _ = Category.objects.get_or_create(content='未設定')
-    return category
+    return category.pk
 
 
 def default_tag():
