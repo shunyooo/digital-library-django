@@ -4,4 +4,5 @@ RUN mkdir /app
 WORKDIR /app
 ADD requirements.txt /app/
 RUN pip install -r requirements.txt
+RUN apt-get update && apt-get -y install poppler-utils python-poppler
 ADD . /app/

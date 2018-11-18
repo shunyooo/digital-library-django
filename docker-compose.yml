@@ -21,7 +21,9 @@ services:
   web:
     build: ./etc/web
     container_name: library.web
-    command: ./manage.py runserver 0.0.0.0:8000
+    command: >
+      bash -c "./manage.py runserver 0.0.0.0:8000 &
+          celery -A library worker -l info -c 4"
     volumes:
       - ./library:/app
       - ./static:/static
@@ -29,3 +31,9 @@ services:
       - 8000:8000
     depends_on:
       - db
+      - redis
+
+  redis:
+    image: redis:4.0.10
+    ports:
+    - 6379:6379
