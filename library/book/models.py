@@ -1,5 +1,7 @@
 from django.db import models
 
+from book.constants import BOOK_STATUS_CREATED
+
 
 def default_category():
     """デフォルトのカテゴリを返す(まだなければ作る)."""
@@ -60,8 +62,18 @@ class Book(models.Model):
     author = models.ManyToManyField(Author, related_name='books', default=default_author, )
     tag = models.ManyToManyField(Tag, related_name='books', default=default_tag, )
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='books', default=default_category, )
+    status = models.IntegerField(default=BOOK_STATUS_CREATED)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
+
+
+class BookImage(models.Model):
+    """本のイメージ"""
+    image = models.ImageField(max_length=500)
+    page = models.IntegerField()
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='images', )
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)

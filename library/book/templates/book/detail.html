@@ -1,1 +1,14 @@
-{{book}}
+{% load static%}
+<h1>{{ object.title }}</h1>
+<p>{{ object.author }}</p>
+<p>tag {{ object.tag }}</p>
+<p>category {{ object.category }}</p>
+<p>status
+    {% if object.status == 0%} UPLOADING...
+    {% else %} UPLOADED
+    {% endif %}
+</p>
+
+{% for book_image in object.images.all %}
+<li>{{ book_image }}</li>
+{% endfor %}

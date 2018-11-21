@@ -12,8 +12,9 @@ pdfminer.six==20170720
 pdf2image==1.0.0
 Pillow==5.3.0
 tqdm==4.28.1
-celery
-django-celery-results
+django-bulk-update==2.2.0
+celery==4.2.1
+django-celery-results==1.0.4
 redis==2.10.6
-django-redis
-ipython
+django-redis==4.9.0
+ipython==7.1.1

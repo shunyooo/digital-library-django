@@ -2,7 +2,10 @@ import glob
 import logging
 from collections import namedtuple
 
-from book.models import Author, Category, Book
+from bulk_update.helper import bulk_update
+
+from book.constants import BOOK_STATUS_UPLOADED
+from book.models import Author, Category, Book, BookImage
 import os.path
 import os
 
@@ -18,9 +21,10 @@ from celery import task
 
 
 @task
-def save_pdf2images(pdf_path, save_dir):
+def save_pdf2images(book_id, pdf_path, save_dir):
     """
     pdfを画像.pngに変換し保存
+    :param book_id: Book Model pk
     :param pdf_path: 保存済みpdf_path
     :param save_dir: 保存先ディレクトリ
     :return:
@@ -31,10 +35,21 @@ def save_pdf2images(pdf_path, save_dir):
     convert_from_path(pdf_path, output_folder=save_dir, fmt='png')
     # 名前の変更
     path_list = glob.glob(f'{save_dir}/*.png')
+    new_path_list = []
     for path in path_list:
         new_filename = os.path.basename(path).split('-')[-1]
         new_path = f'{save_dir}/{new_filename}'
         os.rename(path, new_path)
+        new_path_list.append(new_path)
+
+    # Bookのステータス, ページ数保存
+    _book = Book.objects.filter(pk=book_id).first()
+    _book.status = BOOK_STATUS_UPLOADED
+    _book.page_count = len(path_list)
+    _book.save()
+    # Bookに紐づく画像の保存
+    book_image_list = [BookImage(image=path, book=_book, page=i + 1) for i, path in enumerate(new_path_list)]
+    BookImage.objects.bulk_create(book_image_list)
 
 
 def handle_uploaded_file(f, author_name=None, category=None):
@@ -55,17 +70,17 @@ def handle_uploaded_file(f, author_name=None, category=None):
             for chunk in f.chunks():
                 destination.write(chunk)
 
-        # 非同期：jpeg変換、保存
-        save_imgs_dir = f'{save_dir}/images'
-        logging.debug(f'save images {save_imgs_dir}')
-        save_pdf2images.delay(save_pdf_path, save_imgs_dir)
-
-        # ファイル情報取得
-        # pdf_isnfo = extract_pdf_file_info(save_pdf_path)
-
         # DB登録
         _book = Book.objects.create(title=pdf_title,
                                     page_count=0, )
+
+        # 非同期：jpeg変換、保存
+        save_imgs_dir = f'{save_dir}/images'
+        logging.debug(f'save images {save_imgs_dir}')
+        save_pdf2images.delay(_book.pk, save_pdf_path, save_imgs_dir)
+
+        # ファイル情報取得
+        # pdf_isnfo = extract_pdf_file_info(save_pdf_path)
 
         # _category = None
         # if category:
