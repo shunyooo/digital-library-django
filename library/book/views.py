@@ -8,12 +8,18 @@ from book.models import Book
 from book.tasks import handle_uploaded_file
 from django.views.generic.edit import FormView
 
+from django.views.generic import ListView, DetailView
+
 import logging
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the book index.")
+class BookListView(ListView):
+    model = Book
+    template_name = "book/index.html"
 
+class BookDetailView(DetailView):
+    model = Book
+    template_name = "book/detail.html"
 
 def book_detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
