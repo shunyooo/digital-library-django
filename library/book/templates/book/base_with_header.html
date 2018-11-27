@@ -1,0 +1,62 @@
+{% extends 'book/base.html' %}
+{% load static%}
+
+{% block extracss %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/header.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/dropdown.css' %}"/>
+{% endblock %}
+
+{% block header %}
+<div class="header">
+    <div class="header-icon-title">
+        DEGITAL<br>LIBRARY
+    </div>
+    <form class="header-form"
+          action="http://localhost:8000/book/%E8%87%AA%E5%88%86%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88URL" method="get">
+        <div class="form-inputs-wrap">
+            <div class="select-wrap">
+                <select name="" id="">
+                    <option value="">キーワード</option>
+                    <option value="">タイトル</option>
+                    <option value="">著者</option>
+                </select>
+            </div>
+            <input class="header-form-input" id="s" name="s" type="text" placeholder="フリーワードを入力">
+            <button class="header-form-submit" type="submit"><i class="fas fa-search"></i>検索</button>
+        </div>
+    </form>
+    <div class="header-menu-left">
+        <ul class="nav">
+            <li><a href="#">カテゴリー<i class="material-icons nav-icon">
+                arrow_drop_down
+            </i></a>
+                <ul>
+                    <li><a href="#">プログラミング</a></li>
+                    <li><a href="#">数学理論</a></li>
+                    <li><a href="#">自然言語処理</a></li>
+                    <li><a href="#">ビジネス</a></li>
+                </ul>
+            </li>
+            <li><a href="#">タグ<i class="material-icons nav-icon">
+                arrow_drop_down
+            </i></a>
+                <ul>
+                    <li><a href="#">強化学習</a></li>
+                    <li><a href="#">Linux</a></li>
+                    <li><a href="#">データ分析</a></li>
+                    <li><a href="#">入門</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="header-menu-right">
+        <ul class="right-nav-wrapper">
+            <li><a href="{% url 'book:upload' %}">アップロード</a></li>
+            <li><a href="#">My本棚</a></li>
+            <li><a href="#">会員登録</a></li>
+            <li><a href="#">ログイン</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

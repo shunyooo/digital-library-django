@@ -1,0 +1,124 @@
+.nav {
+    /*    width: 750px;*/
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+}
+
+.nav li {
+    position: relative;
+    list-style: none;
+}
+
+.nav li a {
+    display: block;
+    width: 130px;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    line-height: 2.8;
+    background: #001734;
+    transition: 0.5s;
+    text-decoration: none;
+    /*    border-right: 1px solid #eee;*/
+    box-sizing: border-box;
+}
+
+.nav > li:hover > a {
+    /*layer-1*/
+    background: #10386a;
+}
+
+.nav > li li:hover > a {
+    /*layer-2*/
+    background: #10386a;
+}
+
+.nav li ul {
+    top: 100%;
+    left: -40px;
+    position: absolute;
+}
+
+.nav li ul li {
+    overflow: hidden;
+    height: 0;
+    transition: 0.2s;
+}
+
+.nav li ul li a {
+    border-top: 1px solid #eee;
+}
+
+.nav li:hover > ul > li {
+    overflow: visible;
+    height: 40px;
+}
+
+.nav li ul li ul {
+    top: 0;
+    left: 110px;
+}
+
+.nav li ul li ul:before {
+    /*layer-2▷*/
+    position: absolute;
+    content: "";
+    top: 15px;
+    left: 30px;
+    border: 5px solid transparent;
+    border-left: 5px solid #fff;
+}
+
+.nav li ul li ul li:hover > a {
+    /*layer-3*/
+    color: pink;
+    background: #afc6e2;
+}
+
+.nav li ul li ul.left {
+    top: 0;
+    left: -190px;
+}
+
+.nav li ul li ul.left:before,
+    /*layer-2-left▷*/
+.nav li ul li ul li ul.left:before {
+    /*layer-3-left▷*/
+    position: absolute;
+    content: "";
+    top: 15px;
+    left: 190px;
+    border: 5px solid transparent;
+    border-right: 5px solid #fff;
+}
+
+.nav li ul li ul.left li:hover > a {
+    /*layer-2-left*/
+    color: pink;
+    background: #afc6e2;
+}
+
+.nav li ul li ul li ul.left li:hover > a {
+    /*layer-3-left*/
+    color: purple;
+    background: #afc6e2;
+}
+
+.content {
+    width: 750px;
+    height: 200px;
+    background: #eee;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.nav-icon {
+    position: absolute;
+    top: 7px;
+    color: #9DA2A9;
+}

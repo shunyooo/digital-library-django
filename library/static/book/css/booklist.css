@@ -1,0 +1,19 @@
+.book-list-section {
+    margin-top: 50px;
+}
+
+.book-list-title {
+    float: left;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.book-list-more {
+    float: right;
+    font-size: 0.9rem;
+}
+
+.book-list-header {
+    border-bottom: solid 1px #000000;
+    padding: 0 10px 5px 10px;
+}
