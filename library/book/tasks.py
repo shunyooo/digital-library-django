@@ -34,7 +34,7 @@ def save_pdf2images(book_id, pdf_path, save_dir):
     # output_folderを指定しないとメモリエラーになる
     convert_from_path(pdf_path, output_folder=save_dir, fmt='png')
     # 名前の変更
-    path_list = glob.glob(f'{save_dir}/*.png')
+    path_list = sorted(glob.glob(f'{save_dir}/*.png'))
     new_path_list = []
     for path in path_list:
         new_filename = os.path.basename(path).split('-')[-1]

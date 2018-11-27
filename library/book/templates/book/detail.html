@@ -1,4 +1,7 @@
+{% extends 'book/base.html' %}
 {% load static%}
+
+{% block content %}
 <h1>{{ object.title }}</h1>
 <p>{{ object.author }}</p>
 <p>tag {{ object.tag }}</p>
@@ -10,5 +13,22 @@
 </p>
 
 {% for book_image in object.images.all %}
-<li>{{ book_image }}</li>
+<li>
+    <img class="lazy" data-original="{{ book_image.image.url }}" width="100%">
+</li>
 {% endfor %}
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
+<script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
+
+<script type="text/javascript">
+    $('img.lazy').lazyload({
+        threshold: 200,    // 読み込み閾値 px
+        effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+    });
+</script>
+
+{% endblock %}
