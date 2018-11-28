@@ -25,7 +25,7 @@ def default_author():
 class Tag(models.Model):
     """タグ."""
     content = models.CharField(max_length=255, unique=True, db_index=True)
-    book_count = models.PositiveIntegerField(default=1)
+    book_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -36,7 +36,7 @@ class Tag(models.Model):
 class Category(models.Model):
     """カテゴリ."""
     content = models.CharField('カテゴリ名', unique=True, max_length=255)
-    book_count = models.PositiveIntegerField(default=1)
+    book_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -47,7 +47,7 @@ class Category(models.Model):
 class Author(models.Model):
     """著者."""
     name = models.CharField(max_length=200, unique=True)
-    book_count = models.PositiveIntegerField(default=1)
+    book_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
