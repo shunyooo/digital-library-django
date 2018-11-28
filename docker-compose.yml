@@ -22,8 +22,7 @@ services:
     build: ./etc/web
     container_name: library.web
     command: >
-      bash -c "./manage.py runserver 0.0.0.0:8000 &
-          celery -A library worker -l info -c 4"
+      bash -c "./manage.py runserver 0.0.0.0:8000 & celery -A library worker -l info -c 4"
     volumes:
       - ./library:/app
       - ./static:/static
