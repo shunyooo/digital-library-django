@@ -16,6 +16,15 @@
     line-height: 31px;
 }
 
+.header .header-icon-title a {
+    color: #FFF;
+}
+
+.header .header-icon-title a {
+    color: #FFF;
+    text-decoration: none;
+}
+
 
 .header-form {
     position: absolute;

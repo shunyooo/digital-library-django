@@ -1,26 +1,62 @@
-{% extends 'book/base.html' %}
+{% extends 'book/base_with_header.html' %}
 {% load static%}
 
 {% block content %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.author }}</p>
-<p>tag {{ object.tag }}</p>
-<p>category {{ object.category }}</p>
-<p>status
-    {% if object.status == 0%} UPLOADING...
-    {% else %} UPLOADED
-    {% endif %}
-</p>
 
-{% for book_image in object.images.all %}
-<li>
-    <img class="lazy" data-original="{{ book_image.image.url }}" width="100%">
-</li>
-{% endfor %}
+<div class="book-detail">
+            <div class="book-image-wrap">
+                <img class="lazy" data-original="{{ object.images.first.image.url }}">
+            </div>
+
+            <div class="detail-right">
+                <ul class="tags">
+                    <li><a href="#">MLP<span>20</span></a></li>
+                    <li><a href="#">プログラミング<span>20</span></a></li>
+                    <li><a href="#">推薦<span>20</span></a></li>
+                </ul>
+                <div class="title">
+                    {{ object.title }}
+                </div>
+                <div class="authors-wrap">
+                    {% for author in object.author.all %}
+                    <a href="#">{{author.name}}</a>,
+                    {% endfor %}
+                </div>
+
+                <div class="else-info">
+                    <ul>
+                        <li>{{ object.page_count }}ページ</li>
+                        <li>{% if object.status == 0%} アップロード中...
+                    {% else %} アップロード済み
+                    {% endif %}</li>
+                    </ul>
+                </div>
+
+                <div class="flex-margin"></div>
+
+                <div class="buttton-area">
+                    {% if object.file %}
+                        <a href="{{ object.file.url }}" class="square_btn">PDFで開く</a>
+                    {% else %}
+                        <a href="#" class="square_btn not_found">PDFが見つかりません</a>
+                    {% endif %}
+                    <a href="#" class="square_btn">ビューワーを開く</a>
+                </div>
+
+            </div>
+</div>
+
+<!--{% for book_image in object.images.all %}-->
+<!--<li>-->
+    <!--<img class="lazy" data-original="{{ book_image.image.url }}" width="100%">-->
+<!--</li>-->
+<!--{% endfor %}-->
 
 {% endblock %}
 
+
 {% block extrajs %}
+{{ block.super }}
 <script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
 <script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
 
@@ -31,4 +67,14 @@
     });
 </script>
 
+{% endblock %}
+
+{% block extracss %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
+<style>
+    li img {
+        height: 100%;
+    }
+</style>
 {% endblock %}

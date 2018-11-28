@@ -5,21 +5,24 @@
 
 <div class="book-list-section">
 
+    {% for book_section in book_section_list %}
     <div class="book-list-header clearfix">
-        <div class="book-list-title">新着アップロード</div>
+        <div class="book-list-title">{{book_section.title}}</div>
         <div class="book-list-more"><a href="">もっと見る ▶︎</a></div>
     </div>
 
-    <ul class="horizontal-list">
-        {% for book in object_list %}
+    <ul class="horizontal-list lazy-container">
+        {% for book in book_section.list %}
         <li class="item">
-            <!--<a href="/book/{{ book.id }}/">{{ book.title }}</a>-->
-            <a href="/book/{{ book.id }}/">
-                <img class="lazy" data-original="{{ book.images.first.image.url }}" width="100%">
+            <a href="/book/{{ book.id }}/" target="_blank">
+                <img class="lazy" src="{% static 'book/images/loading.png' %}"
+                     data-original="{{ book.images.first.image.url }}" height="500px">
             </a>
         </li>
         {% endfor %}
     </ul>
+
+    {% endfor %}
 </div>
 
 {% endblock %}
@@ -30,9 +33,15 @@
 <script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
 
 <script type="text/javascript">
-    $('img.lazy').lazyload({
-        threshold: 200,    // 読み込み閾値 px
-        effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+    $(function () {
+        $('.lazy-container').each((index, container) => {
+            console.log(container);
+            $(container).find('img.lazy').lazyload({
+                threshold: 500,    // 読み込み閾値 px
+                effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+                container: container,
+            });
+        });
     });
 </script>
 
@@ -51,19 +60,29 @@
         overflow-x: auto;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
+        padding: 40px 60px;
     }
 
     .item {
         /* 横スクロール用 */
         display: inline-block;
-
         /* 見た目調整 */
-        width: 279px;
-        /*height: 400px;*/
+        /*width: 279px;*/
+        height: 500px;
+        width: auto;
         margin: 16px 40px 16px 0;
         font-size: 48px;
         /*background: rgba(255, 0, 0, 0.4);*/
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .item a {
+        display: inline-block;
+        height: 100%;
+    }
+
+    .item img {
+        height: 500px;
     }
 </style>
 {% endblock %}

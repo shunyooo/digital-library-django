@@ -1,0 +1,150 @@
+.book-detail {
+    margin: auto;
+    margin-top: 90px;
+    max-width: 800px;
+    display: flex;
+/*    flex-wrap: wrap;*/
+}
+
+.book-image-wrap img {
+    width: 400px;
+    height: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+}
+
+.detail-right {
+    padding: 10px 30px;
+    min-width: 600px;
+}
+
+.book-image-wrap {
+}
+
+ul.tags {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.tags li {
+    display: inline-block;
+    margin: 0 .3em .3em 0;
+    padding: 0;
+}
+
+ul.tags li a {
+    position: relative;
+    display: inline-block;
+    max-width: 200px;
+    height: 38px;
+    line-height: 35px;
+    padding: 0 3em 0 1.4em;
+    background-color: #fff;
+    border: 1px solid #9DA2A9;
+    border-radius: 6px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #333;
+    font-size: 17px;
+    text-decoration: none;
+    -webkit-transition: .2s;
+    transition: .2s;
+    color: #5B5B5B;
+}
+
+ul.tags li span {
+    position: absolute;
+    top: 5.5px;
+    right: 13px;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    line-height: 23px;
+    background-color: #C6C6C6;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+ul.tags li a:hover {
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    color: #fff;
+}
+
+ul.tags li a:hover span {
+    background-color: #fff;
+    color: #3498db;
+}
+
+.detail-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-margin {
+    flex: 1;
+}
+
+.detail-right .title {
+    font-size: 37px;
+    font-weight: bold;
+}
+
+.authors-wrap {
+    padding-left: 5px
+}
+
+.else-info {
+    width: 100%;
+    border-top: solid 1px #5B5B5B;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.button-area{
+    margin: 20px auto;
+}
+
+.square_btn{
+    display: block;
+    width: 90%;
+    height: 60px;
+    margin: 20px auto;
+    padding: 0.9rem;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    background: #2E8DD5;
+    color: #FFF;
+    border-bottom: solid 4px #0066C0;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.square_btn:active {/*ボタンを押したとき*/
+    -ms-transform: translateY(4px);
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);/*下に動く*/
+    border-bottom: none;/*線を消す*/
+}
+
+.square_btn:hover {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.square_btn.not_found {
+    color: #FFF;
+    background-color: #C6C6C6;
+    border-bottom-color: #A6A6A6;
+}
+
+.square_btn.not_found:active {/*ボタンを押したとき*/
+    pointer-events: none;
+}
