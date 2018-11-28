@@ -51,6 +51,8 @@ def save_pdf2images(book_id, pdf_path, save_dir):
     book_image_list = [BookImage(image=path, book=_book, page=i + 1) for i, path in enumerate(new_path_list)]
     BookImage.objects.bulk_create(book_image_list)
 
+    # TODO: 通知
+
 
 def handle_uploaded_file(f, author_name=None, category=None):
     """
@@ -71,8 +73,7 @@ def handle_uploaded_file(f, author_name=None, category=None):
                 destination.write(chunk)
 
         # DB登録
-        _book = Book.objects.create(title=pdf_title,
-                                    page_count=0, )
+        _book = Book.objects.create(title=pdf_title, page_count=0, file=save_pdf_path)
 
         # 非同期：jpeg変換、保存
         save_imgs_dir = f'{save_dir}/images'
@@ -89,11 +90,6 @@ def handle_uploaded_file(f, author_name=None, category=None):
         if author_name:
             _author, _ = Author.objects.get_or_create(name=author_name)
             _book.author.set([_author])
-
-        # TODO: APIより書籍情報を集める
-
-        # TODO: 通知
-
 
 
 
