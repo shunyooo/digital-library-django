@@ -58,6 +58,7 @@ class Author(models.Model):
 class Book(models.Model):
     """本."""
     title = models.CharField(max_length=200, unique=True)
+    file = models.FileField(max_length=500, null=True)
     page_count = models.PositiveIntegerField()
     author = models.ManyToManyField(Author, related_name='books', default=default_author, )
     tag = models.ManyToManyField(Tag, related_name='books', default=default_tag, )
