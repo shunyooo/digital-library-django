@@ -1,0 +1,92 @@
+{% extends 'book/base_with_header.html' %}
+{% load static%}
+
+{% block content %}
+
+<div class="search-info">
+    <div class="search-hit-num">
+        検索結果：{{book_list.count}}件
+    </div>
+</div>
+
+<div class="book-list lazy-container">
+    {% for book in book_list %}
+        <li class="item">
+            <a href="/book/{{ book.id }}/" target="_blank">
+                <img class="lazy" src="{% static 'book/images/loading.png' %}"
+                     data-original="{{ book.images.first.image.url }}">
+            </a>
+        </li>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+{{ block.super }}
+<script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
+<script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.lazy-container').each((index, container) => {
+            console.log(container);
+            $(container).find('img.lazy').lazyload({
+                threshold: 500,    // 読み込み閾値 px
+                effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+                container: container,
+            });
+        });
+    });
+</script>
+
+{% endblock %}
+
+
+{% block extracss %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/booklist.css' %}"/>
+<style>
+    .container {
+        max-width: 90%;
+    }
+
+    .search-info{
+        margin-top: 50px;
+        border-bottom: solid 1px #5B5B5B;
+        font-size: 1.1rem;
+    }
+
+    .search-hit-num{
+        padding: 10px;
+        padding-left: 20px;
+    }
+
+    .book-list {
+        padding-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .item {
+        /* 横スクロール用 */
+        display: inline-block;
+        /* 見た目調整 */
+        height: auto;
+        margin: 16px 40px 16px 0;
+        font-size: 48px;
+        /*background: rgba(255, 0, 0, 0.4);*/
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .item a {
+        display: inline-block;
+        height: 100%;
+    }
+
+    .item img {
+        width: 250px;
+    }
+</style>
+{% endblock %}
