@@ -4,53 +4,70 @@
 {% block content %}
 
 <div class="book-detail">
-            <div class="book-image-wrap">
-                <img class="lazy" data-original="{{ object.images.first.image.url }}">
-            </div>
+    <div class="book-image-wrap lazy-container">
+        <img class="lazy" data-original="{{ object.images.first.image.url }}">
+    </div>
 
-            <div class="detail-right">
-                <ul class="tags">
-                    <li><a href="#">MLP<span>20</span></a></li>
-                    <li><a href="#">プログラミング<span>20</span></a></li>
-                    <li><a href="#">推薦<span>20</span></a></li>
-                </ul>
-                <div class="title">
-                    {{ object.title }}
-                </div>
-                <div class="authors-wrap">
-                    {% for author in object.author.all %}
-                    <a href="#">{{author.name}}</a>,
-                    {% endfor %}
-                </div>
+    <div class="detail-right">
+        <ul class="tags">
+            {% for tag in object.tag.all %}
+                <li><a href="#">{{tag.content}}<span>{{tag.book_count}}</span></a></li>
+            {% endfor %}
+            <li><i class="material-icons tag-edit-icon">
+                edit
+            </i></li>
+        </ul>
+        <ul class="tags_edit">
+            {% for tag in object.tag.all %}
+                <li>{{tag.content}}</li>
+            {% endfor %}
+        </ul>
 
-                <div class="else-info">
-                    <ul>
-                        <li>{{ object.page_count }}ページ</li>
-                        <li>{% if object.status == 0%} アップロード中...
+
+        <div class="title">
+            {{ object.title }}
+        </div>
+        <div class="authors-wrap">
+            {% for author in object.author.all %}
+            <a href="#">{{author.name}}</a>,
+            {% endfor %}
+        </div>
+
+        <div class="else-info">
+            <ul>
+                <li>{{ object.page_count }}ページ</li>
+                <li>{% if object.status == 0%} アップロード中...
                     {% else %} アップロード済み
-                    {% endif %}</li>
-                    </ul>
-                </div>
-
-                <div class="flex-margin"></div>
-
-                <div class="buttton-area">
-                    {% if object.file %}
-                        <a href="{{ object.file.url }}" class="square_btn">PDFで開く</a>
-                    {% else %}
-                        <a href="#" class="square_btn not_found">PDFが見つかりません</a>
                     {% endif %}
-                    <a href="#" class="square_btn">ビューワーを開く</a>
-                </div>
+                </li>
+            </ul>
+        </div>
 
-            </div>
+        <div class="flex-margin"></div>
+
+        <div class="buttton-area">
+            {% if object.file %}
+            <a href="{{ object.file.url }}" class="square_btn">PDFで開く</a>
+            {% else %}
+            <a href="#" class="square_btn not_found">PDFが見つかりません</a>
+            {% endif %}
+            <a href="#" class="square_btn">ビューワーを開く</a>
+        </div>
+
+    </div>
 </div>
 
-<!--{% for book_image in object.images.all %}-->
-<!--<li>-->
-    <!--<img class="lazy" data-original="{{ book_image.image.url }}" width="100%">-->
-<!--</li>-->
-<!--{% endfor %}-->
+<div class="book-viewer">
+    <div class="viewer-area horizontal-list lazy-container">
+        {% for book_image in object.images.all %}
+        <li class="item">
+            <img class="lazy" src="{% static 'book/images/loading.png' %}" data-original="{{ book_image.image.url }}"
+                 width="100%">
+        </li>
+        {% endfor %}
+    </div>
+</div>
+
 
 {% endblock %}
 
@@ -61,9 +78,24 @@
 <script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
 
 <script type="text/javascript">
-    $('img.lazy').lazyload({
-        threshold: 200,    // 読み込み閾値 px
-        effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+
+
+    $(function () {
+        $('.lazy-container').each((index, container) => {
+            console.log(container);
+            $(container).find('img.lazy').lazyload({
+                threshold: 500,    // 読み込み閾値 px
+                effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+                container: container,
+            });
+        });
+
+
+        $('.tag-edit-icon').on('click', e => {
+            console.log(e);
+
+
+        })
     });
 </script>
 
@@ -73,8 +105,64 @@
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
 <style>
-    li img {
-        height: 100%;
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+    }
+
+    .tag-edit-icon {
+        font-size: 30px;
+        color: #c2c0c2;
+        position: relative;
+        display: inline-block;
+        height: 38px;
+        line-height: 35px;
+        background-color: #fff;
+        border-radius: 6px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-decoration: none;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
+
+    .tag-edit-icon:hover {
+        cursor: pointer;
+    }
+
+    .horizontal-list {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding: 40px 60px;
+    }
+
+    .item {
+        /* 横スクロール用 */
+        display: inline-block;
+        /* 見た目調整 */
+        /*width: 279px;*/
+        height: 500px;
+        width: auto;
+        margin: 16px 40px 16px 0;
+        font-size: 48px;
+        /*background: rgba(255, 0, 0, 0.4);*/
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .item img {
+        height: 500px;
+        width: auto;
+    }
+
+    .book-viewer {
+        margin: 200px 0 90px 0;
+        background-color: #525659;
+        box-shadow: 0px 1px 10px 0px inset;
     }
 </style>
+
 {% endblock %}
