@@ -8,7 +8,13 @@
     {% for book_section in book_section_list %}
     <div class="book-list-header clearfix">
         <div class="book-list-title">{{book_section.title}}</div>
-        <div class="book-list-more"><a href="">もっと見る ▶︎</a></div>
+        <div class="book-list-more">
+            {% if book_section.key == 'tag' %}
+                <a href="{% url 'book:list' %}?tag={{book_section.title}}">もっと見る ▶︎</a>
+            {% else %}
+                <a href="{% url 'book:list' %}">もっと見る ▶︎</a>
+            {% endif %}
+        </div>
     </div>
 
     <ul class="horizontal-list lazy-container">

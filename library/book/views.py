@@ -23,7 +23,7 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         # 新着, 適当なタグを探して紐づく本, 10件を10回ぐらいループ
         book_section_list = [
-            {"title": "新着アップロード", "list": Book.objects.order_by('-created_at').all()[:10]}
+            {"title": "新着アップロード", "list": Book.objects.order_by('-created_at').all()[:10], "key": "new"}
         ]
 
         # TODO: ここで集計せずbook_countでちゃんと入れておくように
@@ -31,6 +31,7 @@ class HomeView(View):
             book_section_list.append({
                 "title": tag.content,
                 "list": tag.books.all()[:10],
+                "key": "tag",
             })
 
         context = {'book_section_list': book_section_list}

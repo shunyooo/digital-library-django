@@ -11,7 +11,7 @@
     <div class="detail-right">
         <ul class="tags">
             {% for tag in object.tag.all %}
-                <li><a href="#">{{tag.content}}<span>{{tag.book_count}}</span></a></li>
+                <li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}<span>{{tag.book_count}}</span></a></li>
             {% endfor %}
             <li><i class="material-icons tag-edit-icon">
                 edit
@@ -79,6 +79,7 @@
 
 <script type="text/javascript">
 
+    nnnn = "{% for tag in object.tag.all %}{{tag.content}} {% endfor%}".split(' ').filter(v=>v!="")
 
     $(function () {
         $('.lazy-container').each((index, container) => {
