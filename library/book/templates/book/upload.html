@@ -1,4 +1,4 @@
-{% extends 'book/base.html' %}
+{% extends 'book/base_with_header.html' %}
 {% load static %}
 
 {% block content %}
@@ -52,6 +52,8 @@
 {% endblock %}
 
 {% block extrajs %}
+{{ block.super }}
+
 <!--TODO: DROPZONEの導入-->
 <script src="{% static 'lib/js/dropzone.js' %}"></script>
 <script src="{% static 'lib/js/materialize.js' %}"></script>
@@ -168,14 +170,16 @@
 {% endblock %}
 
 {% block extracss %}
+{{ block.super }}
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{% static 'lib/css/dropzone.css' %}"/>
-<link rel="stylesheet" type="text/css" href="{% static 'lib/css/materialize.css' %}"/>
+<!--<link rel="stylesheet" type="text/css" href="{% static 'lib/css/materialize.css' %}"/>-->
 
 
 <style>
-    textarea:focus, input:focus {
-        outline: none;
-    }
+    /*textarea:focus, input:focus {*/
+        /*outline: none;*/
+    /*}*/
 </style>
 {% endblock %}
