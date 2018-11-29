@@ -13,16 +13,16 @@
         <a href="{% url 'book:index' %}">DEGITAL<br>LIBRARY</a>
     </div>
     <form class="header-form"
-          action="http://localhost:8000/book/%E8%87%AA%E5%88%86%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88URL" method="get">
+          action="{% url 'book:list' %}" method="get">
         <div class="form-inputs-wrap">
             <div class="select-wrap">
-                <select name="" id="">
-                    <option value="">キーワード</option>
-                    <option value="">タイトル</option>
-                    <option value="">著者</option>
+                <select name="search-select">
+                    <option value="title">タイトル</option>
+                    <option value="tag">タグ</option>
+                    <option value="author">著者</option>
                 </select>
             </div>
-            <input class="header-form-input" id="s" name="s" type="text" placeholder="フリーワードを入力">
+            <input class="header-form-input" name="search-text" type="text" placeholder="フリーワードを入力">
             <button class="header-form-submit" type="submit"><i class="fas fa-search"></i>検索</button>
         </div>
     </form>
@@ -48,4 +48,49 @@
         </ul>
     </div>
 </div>
+{% endblock %}
+
+
+{% block extrajs %}
+{{ block.super }}
+<script src="{% static 'lib/js/purl.js' %}"></script>
+<script type="text/javascript">
+    $(function () {
+        syncFormWithURL();
+        registSubmitHandler();
+    });
+
+    function registSubmitHandler() {
+        $('.header-form').submit(function () {
+            const $form = $(this);
+            const search_key = $form.find('select[name="search-select"]').val();
+            const search_text = $('[name="search-text"]').val();
+            //TODO: 全角空白対応
+            const search_query_list = search_text.split(' ').filter(v => {
+                return v != ""
+            });
+            console.log($form, search_key, search_text, search_query_list);
+            var search_query = "";
+            for (var i in search_query_list) {
+                var prefix = "&"
+                if (i == 0) {
+                    prefix = "?"
+                }
+                search_query += prefix + search_key + '=' + search_query_list[i]
+            }
+            window.location.href = $form.attr('action') + search_query;
+            return false;
+        })
+    }
+
+    function syncFormWithURL() {
+        const q_url_dict = $.url().data.param.query
+        for (var key in q_url_dict) {
+            $('select[name="search-select"]').val(key)
+            const query = typeof(q_url_dict[key]) == 'string' ? q_url_dict[key] : q_url_dict[key].join(' ')
+            $('[name="search-text"]').val(query);
+        }
+    }
+</script>
+
 {% endblock %}
