@@ -58,9 +58,18 @@
 
 ## SETUP
 
+ipdb使いたい時。逆にattachが効かないみたい
+
 ```shell
 $ cd degital-library
 $ sh bin/docker-compose-build-run.sh
+```
+
+attachしたい時
+
+```shell
+$ cd degital-library
+$ docker-compose up --build
 ```
 
 ## ATTACH CONTAINER
