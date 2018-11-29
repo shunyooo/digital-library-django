@@ -14,6 +14,11 @@ from django.views.generic import ListView, DetailView
 
 import logging
 
+
+def _get_tag_context():
+    return {'tag_list': Tag.objects.all()}
+
+
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         # 新着, 適当なタグを探して紐づく本, 10件を10回ぐらいループ
@@ -29,24 +34,64 @@ class HomeView(View):
             })
 
         context = {'book_section_list': book_section_list}
+        context.update(_get_tag_context())
         return render(request, "book/index.html", context=context)
 
 
 class BookListView(ListView):
     model = Book
-    
+    context_object_name = "book_list"
     template_name = "book/list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(BookListView, self).get_context_data(**kwargs)
+        context.update(_get_tag_context())
+        return context
+
+    def get_queryset(self):
+        # TODO: タイトル, タグ, 著者で検索
+        result_qs = self.model.objects.all()
+
+        # AND検索
+        # タイトル
+        q_title_list = self.request.GET.getlist("title")
+        for q in q_title_list:
+            result_qs = result_qs.filter(title__contains=q)
+
+        # タグ
+        q_tag_list = self.request.GET.getlist("tag")
+        for q in q_tag_list:
+            result_qs = result_qs.filter(tag__content=q)
+
+        # 著者
+        q_author_list = self.request.GET.getlist("author")
+        for q in q_author_list:
+            result_qs = result_qs.filter(author__name__contains=q)
+
+        logging.debug(result_qs.query)
+
+        return result_qs
 
 
 class BookDetailView(DetailView):
     model = Book
     template_name = "book/detail.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(BookDetailView, self).get_context_data(**kwargs)
+        context.update(_get_tag_context())
+        return context
+
 
 class FileFieldView(FormView):
     form_class = FileFieldForm
     template_name = 'book/upload.html'
     success_url = 'upload'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(FileFieldView, self).get_context_data(**kwargs)
+        context.update(_get_tag_context())
+        return context
 
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):

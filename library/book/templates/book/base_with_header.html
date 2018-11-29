@@ -28,24 +28,13 @@
     </form>
     <div class="header-menu-left">
         <ul class="nav">
-            <li><a href="#">カテゴリー<i class="material-icons nav-icon">
-                arrow_drop_down
-            </i></a>
-                <ul>
-                    <li><a href="#">プログラミング</a></li>
-                    <li><a href="#">数学理論</a></li>
-                    <li><a href="#">自然言語処理</a></li>
-                    <li><a href="#">ビジネス</a></li>
-                </ul>
-            </li>
             <li><a href="#">タグ<i class="material-icons nav-icon">
                 arrow_drop_down
             </i></a>
                 <ul>
-                    <li><a href="#">強化学習</a></li>
-                    <li><a href="#">Linux</a></li>
-                    <li><a href="#">データ分析</a></li>
-                    <li><a href="#">入門</a></li>
+                    {% for tag in tag_list %}
+                        <li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}</a></li>
+                    {% endfor %}
                 </ul>
             </li>
         </ul>
