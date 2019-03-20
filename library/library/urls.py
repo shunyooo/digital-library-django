@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
+import book
 
 from library import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('book/', include('book.urls')),
+    path('', include('book.urls')),
 ]
 
 if settings.DEBUG:

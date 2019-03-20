@@ -170,3 +170,24 @@ select:-moz-focusring {
     text-decoration: none;
     box-sizing: border-box;
 }
+
+.right-nav-wrapper li a::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    content: '';
+    width: 0;
+    height: 3px;
+    background-color: #2E8DD5;
+    transition: .3s;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.right-nav-wrapper li a:hover::after {
+    width: 100%;
+}
+
+.right-nav-wrapper li a:hover{
+    background: #10386a;
+}
