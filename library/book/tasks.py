@@ -66,7 +66,7 @@ def handle_uploaded_file(f, author_name=None, category=None):
         os.makedirs(save_dir)
 
         # PDF保存
-        save_pdf_path = f'{save_dir}/content.pdf'
+        save_pdf_path = f'{save_dir}/{pdf_title}.pdf'
         logging.debug(f'save pdf {save_pdf_path}')
         with open(save_pdf_path, 'wb+') as destination:
             for chunk in f.chunks():
