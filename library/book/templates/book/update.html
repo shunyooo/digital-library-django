@@ -1,0 +1,87 @@
+{% extends 'book/base_with_header.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+<div class="book-detail">
+    <div class="book-image-wrap lazy-container">
+        <img class="lazy" data-original="{{ object.images.first.image.url }}">
+    </div>
+
+    <div class="detail-right">
+        <form method="post">
+            <div class="row">
+                <div class="col-12">
+                    {% bootstrap_form form layout='horizontal' %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary">保存</button>
+                </div>
+            </div>
+            {% csrf_token %}
+        </form>
+        <div class="flex-margin"></div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extrajs %}
+{{ block.super }}
+<script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
+<script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
+<script src="{% static 'lib/js/jquery.tagsinput-revisited.js' %}"></script>
+
+<script type="text/javascript">
+
+    nnnn = "{% for tag in object.tag.all %}{{tag.content}} {% endfor%}".split(' ').filter(v => v != "")
+
+    $(function () {
+        $('.lazy-container').each((index, container) => {
+            console.log(container);
+            $(container).find('img.lazy').lazyload({
+                threshold: 500,    // 読み込み閾値 px
+                effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+                container: container,
+            });
+        });
+
+        $('.tags-edit-input').tagsInput();
+
+        $('.tags-edit').hide();
+
+        $('.tag-edit-icon').on('click', e => {
+            $('.tags').hide();
+            $('.tags-edit').show();
+        });
+
+        $('.tags-edit .submit').on('click', e => {
+            $('.tags').show();
+            $('.tags-edit').hide();
+        });
+
+
+    });
+</script>
+
+{% endblock %}
+
+{% block extracss %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'lib/css/jquery.tagsinput-revisited.css' %}"/>
+<style>
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+    }
+</style>
+
+{% endblock %}

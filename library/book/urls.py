@@ -6,6 +6,7 @@ app_name='book'
 urlpatterns = [
     path('', views.HomeView.as_view(), name='index'),
     path('list', views.BookListView.as_view(), name='list'),
-    path('<int:pk>/', views.BookDetailView.as_view(), name='detail'),
+    path('detail/<int:pk>', views.BookDetailView.as_view(), name='detail'),
+    path('update/<int:pk>', views.BookUpdateView.as_view(), name='update'),
     path('upload', views.FileFieldView.as_view(), name='upload'),
 ]

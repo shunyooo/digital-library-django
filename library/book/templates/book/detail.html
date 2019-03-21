@@ -9,19 +9,27 @@
     </div>
 
     <div class="detail-right">
-        <ul class="tags">
-            {% for tag in object.tag.all %}
-                <li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}<span>{{tag.book_count}}</span></a></li>
-            {% endfor %}
-            <li><i class="material-icons tag-edit-icon">
+        <div class="detail-right-header">
+            <ul class="tags">
+                {% for tag in object.tag.all %}
+                <li class="tag-item"><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}<span>{{tag.book_count}}</span></a>
+                </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'book:update' book.id %}"><i class="material-icons tag-edit-icon">
                 edit
-            </i></li>
-        </ul>
-        <ul class="tags_edit">
-            {% for tag in object.tag.all %}
-                <li>{{tag.content}}</li>
-            {% endfor %}
-        </ul>
+            </i></a>
+        </div>
+
+        <!--<ul class="tags-edit">-->
+            <!--<li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input" value={{book_tag_list_str}}></li>-->
+            <!--<li class="submit square_btn">-->
+                <!--完了-->
+                <!--&lt;!&ndash;<i class="material-icons tag-edit-icon">&ndash;&gt;-->
+                <!--&lt;!&ndash;edit&ndash;&gt;-->
+                <!--&lt;!&ndash;</i>&ndash;&gt;-->
+            <!--</li>-->
+        <!--</ul>-->
 
 
         <div class="title">
@@ -36,7 +44,7 @@
         <div class="else-info">
             <ul>
                 <li>{{ object.page_count }}ページ</li>
-                <li>{% if object.status == 0%} アップロード中...
+                <li>{% if object.status == 0 %} アップロード中...
                     {% else %} アップロード済み
                     {% endif %}
                 </li>
@@ -46,11 +54,20 @@
         <div class="flex-margin"></div>
 
         <div class="buttton-area">
-            {% if object.file %}
-            <a href="{{ object.file.url }}" class="square_btn">PDFで開く</a>
+
+            <!--{% if object.pdf_file %}-->
+            <!--<a href="{{ object.pdf_file.url }}" class="square_btn">PDFで開く</a>-->
+            <!--{% else %}-->
+            <!--<a href="#" class="square_btn not_found">PDFが見つかりません</a>-->
+            <!--{% endif %}-->
+
+
+            {% if object.zip_file %}
+            <a href="{{ object.zip_file.url }}" class="square_btn">zipでダウンロード</a>
             {% else %}
-            <a href="#" class="square_btn not_found">PDFが見つかりません</a>
+            <a href="#" class="square_btn not_found">zipが見つかりません</a>
             {% endif %}
+
             <a href="#" class="square_btn">ビューワーを開く</a>
         </div>
 
@@ -76,10 +93,11 @@
 {{ block.super }}
 <script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
 <script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
+<!--<script src="{% static 'lib/js/jquery.tagsinput-revisited.js' %}"></script>-->
 
 <script type="text/javascript">
 
-    nnnn = "{% for tag in object.tag.all %}{{tag.content}} {% endfor%}".split(' ').filter(v=>v!="")
+    nnnn = "{% for tag in object.tag.all %}{{tag.content}} {% endfor%}".split(' ').filter(v => v != "")
 
     $(function () {
         $('.lazy-container').each((index, container) => {
@@ -91,12 +109,21 @@
             });
         });
 
+        // $('.tags-edit-input').tagsInput();
+        //
+        // $('.tags-edit').hide();
+        //
+        // $('.tag-edit-icon').on('click', e => {
+        //     $('.tags').hide();
+        //     $('.tags-edit').show();
+        // });
+        //
+        // $('.tags-edit .submit').on('click', e => {
+        //     $('.tags').show();
+        //     $('.tags-edit').hide();
+        // });
 
-        $('.tag-edit-icon').on('click', e => {
-            console.log(e);
 
-
-        })
     });
 </script>
 
@@ -105,6 +132,7 @@
 {% block extracss %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'lib/css/jquery.tagsinput-revisited.css' %}"/>
 <style>
     .container {
         width: 100%;
@@ -164,6 +192,34 @@
         background-color: #525659;
         box-shadow: 0px 1px 10px 0px inset;
     }
+
+    .tags-edit {
+        padding: 0;
+        width: 100%;
+    }
+
+    .tags-edit li{
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .tags-edit .submit {
+        width: 80px;
+        height: 40px;
+        margin: 10px;
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    .tags-edit .submit:hover{
+        cursor: pointer;
+    }
+
+    .detail-right-header {
+        display: flex;
+        flex-direction: row;
+    }
+
 </style>
 
 {% endblock %}

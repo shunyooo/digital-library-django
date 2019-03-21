@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -8,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from book.forms import FileFieldForm
 from book.models import Book, Tag
 from book.tasks import handle_uploaded_file
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 
 from django.views.generic import ListView, DetailView
 
@@ -16,7 +17,11 @@ import logging
 
 
 def _get_tag_context():
-    return {'tag_list': Tag.objects.all()}
+    tag_list = Tag.objects.all()
+    return {
+        'tag_list': tag_list,
+        'tag_list_str': ','.join([tag.content for tag in tag_list]),
+    }
 
 
 class HomeView(View):
@@ -81,7 +86,22 @@ class BookDetailView(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(BookDetailView, self).get_context_data(**kwargs)
         context.update(_get_tag_context())
+        context['book_tag_list_str'] = ','.join(context['book'].tag.values_list('content', flat=True))
         return context
+
+
+class BookUpdateView(UpdateView):
+    model = Book
+    fields = ('title', 'tag')
+    template_name = "book/update.html"
+
+    # def form_valid(self, form):
+    #     result = super().form_valid(form)
+    #     return result
+
+    # def get_success_url(self):
+    #     return reverse('detail', kwags={'pk': self.model.id})
+
 
 
 class FileFieldView(FormView):

@@ -16,6 +16,7 @@ import time
 
 from celery import task
 
+import zipfile
 
 # from utils.pdf import PDFConverter
 
@@ -72,8 +73,13 @@ def handle_uploaded_file(f, author_name=None, category=None):
             for chunk in f.chunks():
                 destination.write(chunk)
 
+        # zip保存
+        save_zip_path = f'{save_dir}/{pdf_title}.zip'
+        with zipfile.ZipFile(save_zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as new_zip:
+            new_zip.write(save_pdf_path, arcname=f'{pdf_title}.pdf')
+
         # DB登録
-        _book = Book.objects.create(title=pdf_title, page_count=0, file=save_pdf_path)
+        _book = Book.objects.create(title=pdf_title, page_count=0, pdf_file=save_pdf_path, zip_file=save_zip_path)
 
         # 非同期：jpeg変換、保存
         save_imgs_dir = f'{save_dir}/images'

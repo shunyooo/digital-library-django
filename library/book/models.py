@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 
 from book.constants import BOOK_STATUS_CREATED
@@ -58,7 +59,8 @@ class Author(models.Model):
 class Book(models.Model):
     """本."""
     title = models.CharField(max_length=200, unique=True)
-    file = models.FileField(max_length=500, null=True)
+    pdf_file = models.FileField(max_length=500, null=True)
+    zip_file = models.FileField(max_length=500, null=True)
     page_count = models.PositiveIntegerField()
     author = models.ManyToManyField(Author, related_name='books', default=default_author, )
     tag = models.ManyToManyField(Tag, related_name='books', default=default_tag, )
@@ -69,6 +71,9 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('book:detail', kwargs={'pk': self.pk})
 
 
 class BookImage(models.Model):
