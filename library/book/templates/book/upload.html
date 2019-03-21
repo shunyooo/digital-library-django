@@ -77,7 +77,8 @@
                 autoQueue: true,
                 previewsContainer: "#previews",
                 clickable: "#upload-label",
-                timeout: 180000,
+                timeout: 18000000,
+                maxFilesize: 10000,
             });
 
             zdrop.on("addedfile", function (file) {
