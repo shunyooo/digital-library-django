@@ -7,7 +7,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 from book.forms import FileFieldForm
-from book.models import Book, Tag
+from book.models import Book
 from book.tasks import handle_uploaded_file
 from django.views.generic.edit import FormView, UpdateView
 
@@ -15,16 +15,18 @@ from django.views.generic import ListView, DetailView
 
 import logging
 
-
-def _get_tag_context():
-    tag_list = Tag.objects.all()
-    return {
-        'tag_list': tag_list,
-        'tag_list_str': ','.join([tag.content for tag in tag_list]),
-    }
+from taggit.models import Tag
 
 
-class HomeView(View):
+class TagMixin(object):
+    def get_context_data(self, kwargs):
+        context = super(TagMixin, self).get_context_data(kwargs)
+        context['tags'] = Tag.objects.all()
+        return context
+
+
+
+class HomeView(TagMixin, View):
     def get(self, request, *args, **kwargs):
         # 新着, 適当なタグを探して紐づく本, 10件を10回ぐらいループ
         book_section_list = [
@@ -40,7 +42,6 @@ class HomeView(View):
             })
 
         context = {'book_section_list': book_section_list}
-        context.update(_get_tag_context())
         return render(request, "book/index.html", context=context)
 
 

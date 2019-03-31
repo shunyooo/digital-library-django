@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'bootstrap4',
+    'taggit',
+    'taggit_templatetags',
 ]
 
 MIDDLEWARE = [
