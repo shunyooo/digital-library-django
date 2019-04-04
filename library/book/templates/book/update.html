@@ -17,6 +17,9 @@
                     {% bootstrap_form form layout='horizontal' %}
                 </div>
             </div>
+            <ul class="tags-edit">
+                <li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input" value={{book_tag_list_str}}></li>
+            </ul>
             <div class="row">
                 <div class="col-12">
                     <button class="btn btn-primary">保存</button>
@@ -51,20 +54,28 @@
             });
         });
 
-        $('.tags-edit-input').tagsInput();
+        onAddTag = (e) => {
+            console.log('add', e);
+        }
 
-        $('.tags-edit').hide();
+        onRemoveTag = (e) => {
+            console.log('remove', e);
+        }
 
-        $('.tag-edit-icon').on('click', e => {
-            $('.tags').hide();
-            $('.tags-edit').show();
+        onChange = (e) => {
+            console.log('change', e);
+        }
+
+        $('.tags-edit-input').tagsInput({
+            placeholder: 'タグを設定してください',
+            delimiter: [' ', ','],
+            unique: true,
+            onAddTag: onAddTag,
+            onRemoveTag: onRemoveTag,
+            onChange: onChange,
         });
 
-        $('.tags-edit .submit').on('click', e => {
-            $('.tags').show();
-            $('.tags-edit').hide();
-        });
-
+        // $('.tags-edit').css('visibility', 'visible');
 
     });
 </script>
@@ -82,6 +93,63 @@
         padding: 0;
         max-width: none;
     }
+
+    .tags-edit {
+        padding: 0;
+        width: 100%;
+        /*visibility: hidden;*/
+    }
+
+    .tags-edit li{
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .tags-edit .submit {
+        width: 80px;
+        height: 40px;
+        margin: 10px;
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    .tags-edit .submit:hover {
+        cursor: pointer;
+    }
+
+    #tags-edit-input_tag:focus {
+        outline: 0;
+    }
+
+    #tags-edit-input_tagsinput > .tag {
+        position: relative;
+        display: inline-block;
+        max-width: 300px;
+        height: 30px;
+        line-height: 28px;
+        padding: 0 2em 0 1em;
+        background-color: #fff;
+        border: 1px solid #9DA2A9;
+        border-radius: 6px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        color: #333;
+        font-size: 14px;
+        text-decoration: none;
+        -webkit-transition: .2s;
+        transition: .2s;
+        color: #5B5B5B;
+    }
+
+    #tags-edit-input_tagsinput > .tag > .tag-remove {
+        color: #333;
+    }
+
+     .tagsinput .tag .tag-remove:before, .tagsinput .tag .tag-remove:after{
+        background-color: #9DA2A9;
+    }
+
 </style>
 
 {% endblock %}

@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import get_object_or_404, render
@@ -17,6 +19,7 @@ import logging
 
 
 def _get_tag_context():
+    # TODO: Mixinにする
     tag_list = Tag.objects.all()
     return {
         'tag_list': tag_list,
@@ -92,16 +95,39 @@ class BookDetailView(DetailView):
 
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ('title', 'tag')
+    fields = ('title',)
     template_name = "book/update.html"
 
-    # def form_valid(self, form):
-    #     result = super().form_valid(form)
-    #     return result
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(BookUpdateView, self).get_context_data(**kwargs)
+        context.update(_get_tag_context())
+        context['book_tag_list_str'] = ','.join(context['book'].tag.values_list('content', flat=True))
+        return context
 
-    # def get_success_url(self):
-    #     return reverse('detail', kwags={'pk': self.model.id})
+    def post(self, request, *args, **kwargs):
+        result = super().post(request, *args, **kwargs)
+        tag_list = request.POST['tags-edit-input'].split(' ')
+        book = self.object
 
+        # remove
+        for old_tag_obj in book.tag.all():
+            if old_tag_obj.content not in tag_list:
+                book.tag.remove(old_tag_obj)
+
+        # add
+        old_tag_list = book.tag.all().values_list('content', flat=True)
+        add_tag_list = [_tag for _tag in tag_list if _tag not in old_tag_list]
+        for _tag in add_tag_list:
+            tag_obj, is_create = Tag.objects.get_or_create(content=_tag)
+            book.tag.add(tag_obj)
+
+        return result
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        print(form)
+        print('form_valid!! ', result)
+        return result
 
 
 class FileFieldView(FormView):

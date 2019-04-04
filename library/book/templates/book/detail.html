@@ -16,21 +16,10 @@
                 </li>
                 {% endfor %}
             </ul>
-            <a href="{% url 'book:update' book.id %}"><i class="material-icons tag-edit-icon">
+            <a href="{% url 'book:update' book.id %}" class="tag-edit-a"><i class="material-icons tag-edit-icon">
                 edit
-            </i></a>
+            </i><span class="tag-edit-text">編集する<span></a>
         </div>
-
-        <!--<ul class="tags-edit">-->
-            <!--<li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input" value={{book_tag_list_str}}></li>-->
-            <!--<li class="submit square_btn">-->
-                <!--完了-->
-                <!--&lt;!&ndash;<i class="material-icons tag-edit-icon">&ndash;&gt;-->
-                <!--&lt;!&ndash;edit&ndash;&gt;-->
-                <!--&lt;!&ndash;</i>&ndash;&gt;-->
-            <!--</li>-->
-        <!--</ul>-->
-
 
         <div class="title">
             {{ object.title }}
@@ -109,21 +98,6 @@
             });
         });
 
-        // $('.tags-edit-input').tagsInput();
-        //
-        // $('.tags-edit').hide();
-        //
-        // $('.tag-edit-icon').on('click', e => {
-        //     $('.tags').hide();
-        //     $('.tags-edit').show();
-        // });
-        //
-        // $('.tags-edit .submit').on('click', e => {
-        //     $('.tags').show();
-        //     $('.tags-edit').hide();
-        // });
-
-
     });
 </script>
 
@@ -139,6 +113,18 @@
         margin: 0;
         padding: 0;
         max-width: none;
+    }
+
+    .tag-edit-a {
+        position: relative;
+    }
+
+    .tag-edit-text {
+        font-size: 15px;
+        color: #c2c0c2;
+        position: absolute;
+        top: 10px;
+        width: 100px;
     }
 
     .tag-edit-icon {
@@ -193,32 +179,11 @@
         box-shadow: 0px 1px 10px 0px inset;
     }
 
-    .tags-edit {
-        padding: 0;
-        width: 100%;
-    }
-
-    .tags-edit li{
-        text-decoration: none;
-        list-style: none;
-    }
-
-    .tags-edit .submit {
-        width: 80px;
-        height: 40px;
-        margin: 10px;
-        font-size: 16px;
-        padding: 6px;
-    }
-
-    .tags-edit .submit:hover{
-        cursor: pointer;
-    }
-
     .detail-right-header {
         display: flex;
         flex-direction: row;
     }
+
 
 </style>
 
