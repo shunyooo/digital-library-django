@@ -21,7 +21,7 @@ import zipfile
 
 # from utils.pdf import PDFConverter
 from subprocess import Popen, PIPE
-
+import shutil
 
 @task
 def update_book_data(book_id, pdf_path, thumbnail_tmp_dir):
@@ -103,16 +103,25 @@ def handle_uploaded_file(f, author_name=None, category=None):
     """
     try:
         # 該当ディレクトリ作成
-        pdf_title, _ = os.path.splitext(f.name)
+        _dir, _file = os.path.split(f.name)
+        pdf_title, _ = os.path.splitext(_file)
         save_dir = f'./media/{pdf_title}'
         os.makedirs(save_dir)
 
         # PDF保存
         save_pdf_path = f'{save_dir}/{pdf_title}.pdf'
         logging.debug(f'save pdf {save_pdf_path}')
-        with open(save_pdf_path, 'wb+') as destination:
-            for chunk in f.chunks():
-                destination.write(chunk)
+
+        if 'chunks' in dir(f):
+            # ブラウザ経由：chunkで保存
+            with open(save_pdf_path, 'wb+') as destination:
+                logging.debug(f'save chunks {f.name} to {save_pdf_path}')
+                for chunk in f.chunks():
+                    destination.write(chunk)
+        else:
+            # コピー
+            logging.debug(f'copy {f.name} to {save_pdf_path}')
+            shutil.copyfile(f.name, save_pdf_path)
 
         # zip保存
         save_zip_path = f'{save_dir}/{pdf_title}.zip'
