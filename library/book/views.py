@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from book.forms import FileFieldForm
 from book.models import Book, Tag
 from book.tasks import handle_uploaded_file
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView, DeleteView
 
 from django.views.generic import ListView, DetailView
 
@@ -20,7 +20,7 @@ import logging
 
 def _get_tag_context():
     # TODO: Mixinにする
-    tag_list = Tag.objects.all()
+    tag_list = Tag.objects.filter(book_count__gt=0)
     return {
         'tag_list': tag_list,
         'tag_list_str': ','.join([tag.content for tag in tag_list]),
@@ -107,8 +107,10 @@ class BookUpdateView(UpdateView):
     def post(self, request, *args, **kwargs):
         result = super().post(request, *args, **kwargs)
         tag_list = request.POST['tags-edit-input'].split(' ')
+        tag_list = [tag for tag in tag_list if tag != '']
         book = self.object
 
+        logging.debug(f'post:{tag_list}')
         # remove
         for old_tag_obj in book.tag.all():
             if old_tag_obj.content not in tag_list:
@@ -127,6 +129,16 @@ class BookUpdateView(UpdateView):
         result = super().form_valid(form)
         print(form)
         print('form_valid!! ', result)
+        return result
+
+
+class BookDeleteView(DeleteView):
+    model = Book
+    template_name = "book/confirm_delete.html";
+    success_url = reverse_lazy('book:index')
+
+    def delete(self, request, *args, **kwargs):
+        result = super().delete(request, *args, **kwargs)
         return result
 
 

@@ -1,0 +1,63 @@
+{% extends 'book/base_with_header.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+<div class="book-detail">
+    <div class="book-image-wrap lazy-container">
+        <img class="lazy" data-original="{{ object.thumbnail_image.url }}">
+    </div>
+
+    <div class="detail-right">
+        <div class="row">
+            <div class="col-12">
+                <p> 以下の本を削除しますか？</p>
+                <p>「{{ object }}」</p>
+                <form method="post">
+                    <button class="btn btn-danger">削除する</button>
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+        <div class="flex-margin"></div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extrajs %}
+{{ block.super }}
+<script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
+<script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.lazy-container').each((index, container) => {
+            console.log(container);
+            $(container).find('img.lazy').lazyload({
+                threshold: 500,    // 読み込み閾値 px
+                effect: 'fadeIn',  // 読み込みエフェクトも指定できる
+                container: container,
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}
+
+{% block extracss %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
+<style>
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+    }
+</style>
+
+{% endblock %}
