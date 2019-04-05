@@ -7,7 +7,7 @@
 }
 
 .book-image-wrap img {
-    width: 500px;
+    width: 450px;
     height: auto;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
@@ -15,6 +15,8 @@
 .detail-right {
     padding: 10px 30px;
     min-width: 600px;
+    display: flex;
+    flex-direction: column;
 }
 
 .book-image-wrap {
@@ -79,11 +81,6 @@ ul.tags li a:hover {
 ul.tags li a:hover span {
     background-color: #fff;
     color: #3498db;
-}
-
-.detail-right {
-    display: flex;
-    flex-direction: column;
 }
 
 .flex-margin {
