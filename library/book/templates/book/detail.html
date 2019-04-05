@@ -5,7 +5,7 @@
 
 <div class="book-detail">
     <div class="book-image-wrap lazy-container">
-        <img class="lazy" data-original="{{ object.images.first.image.url }}">
+        <img class="lazy" data-original="{{ object.thumbnail_image.url }}">
     </div>
 
     <div class="detail-right">
@@ -33,7 +33,7 @@
         <div class="else-info">
             <ul>
                 <li>{{ object.page_count }}ページ</li>
-                <li>{% if object.status == 0 %} アップロード中...
+                <li>{% if object.status == 0 %} 処理中...
                     {% else %} アップロード済み
                     {% endif %}
                 </li>
@@ -57,7 +57,7 @@
             <a href="#" class="square_btn not_found">zipが見つかりません</a>
             {% endif %}
 
-            <a href="#" class="square_btn">ビューワーを開く</a>
+            <!--<a href="#" class="square_btn">ビューワーを開く</a>-->
         </div>
 
     </div>

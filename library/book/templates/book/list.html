@@ -18,7 +18,7 @@ WSL-LIB
         <li class="item">
             <a href="{% url 'book:detail' book.id %}" target="_blank">
                 <img class="lazy" src="{% static 'book/images/loading.png' %}"
-                     data-original="{{ book.images.first.image.url }}">
+                     data-original="{{ book.thumbnail_image.url }}">
             </a>
         </li>
     {% endfor %}

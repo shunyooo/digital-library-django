@@ -24,7 +24,7 @@ from subprocess import Popen, PIPE
 
 
 @task
-def update_book_data(book_id, pdf_path, thumbnail_dir):
+def update_book_data(book_id, pdf_path, thumbnail_tmp_dir):
     """
     時間がかかりそうな取得系はこのメソッド内で取得
     ・ページ数
@@ -32,19 +32,20 @@ def update_book_data(book_id, pdf_path, thumbnail_dir):
 
     :param book_id: Book Model pk
     :param pdf_path: 保存済みpdf_path
-    :param thumbnail_dir: サムネイル保存先ディレクトリ
+    :param thumbnail_tmp_dir: サムネイル保存先ディレクトリ
     :return:
     """
     _book = Book.objects.filter(pk=book_id).first()
     # ページ数更新
     _book.page_count = page_count(pdf_path)
+    _book.save()
+
     # サムネイル設定
-    thumbnail_path_new = f'{thumbnail_dir}/thumbnail.png'
-    convert_from_path(pdf_path, last_page=1, output_folder=thumbnail_dir, fmt='png')
-    thumbnail_path_old = sorted(glob.glob(f'{thumbnail_dir}/*.png'))[0]
+    thumbnail_path_new = f'{thumbnail_tmp_dir}/thumbnail.png'
+    convert_from_path(pdf_path, last_page=1, output_folder=thumbnail_tmp_dir, fmt='png')
+    thumbnail_path_old = sorted(glob.glob(f'{thumbnail_tmp_dir}/*.png'))[0]
     os.rename(thumbnail_path_old, thumbnail_path_new)
     _book.thumbnail_image = thumbnail_path_new
-
     _book.save()
 
 
@@ -61,7 +62,7 @@ def save_pdf2images(book_id, pdf_path, save_dir):
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
-    _book = Book.objects.filter(pk=book_id).first()
+    get_book = lambda: Book.objects.filter(pk=book_id).first()
 
     def convert_pdf2img_save(first_page=None, last_page=None):
         nonlocal _book
@@ -80,15 +81,15 @@ def save_pdf2images(book_id, pdf_path, save_dir):
             new_index_list.append(img_index)
 
         # Bookに紐づく画像の保存
+        _book = get_book()
         book_image_list = [BookImage(image=path, book=_book, page=i)
                            for (i, path) in zip(new_index_list, new_path_list)]
         BookImage.objects.bulk_create(book_image_list)
 
-    # サムネイル用に早めに1枚目だけやっとく
-    convert_pdf2img_save(last_page=1)
-    convert_pdf2img_save(first_page=2)
+    convert_pdf2img_save()
 
     # Bookのステータス更新
+    _book = get_book()
     _book.status = BOOK_STATUS_UPLOADED
     _book.save()
 

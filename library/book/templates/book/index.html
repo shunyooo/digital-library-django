@@ -10,9 +10,9 @@
         <div class="book-list-title">{{book_section.title}}</div>
         <div class="book-list-more">
             {% if book_section.key == 'tag' %}
-                <a href="{% url 'book:list' %}?tag={{book_section.title}}">もっと見る ▶︎</a>
+            <a href="{% url 'book:list' %}?tag={{book_section.title}}">もっと見る ▶︎</a>
             {% else %}
-                <a href="{% url 'book:list' %}">もっと見る ▶︎</a>
+            <a href="{% url 'book:list' %}">もっと見る ▶︎</a>
             {% endif %}
         </div>
     </div>
@@ -20,9 +20,13 @@
     <ul class="horizontal-list lazy-container">
         {% for book in book_section.list %}
         <li class="item">
-            <a href="{% url 'book:detail' book.id %}" target="_blank" >
+            <a href="{% url 'book:detail' book.id %}" target="_blank">
+                {% if book.thumbnail_image %}
                 <img class="lazy" src="{% static 'book/images/loading.png' %}"
-                     data-original="{{ book.images.first.image.url }}" height="500px">
+                     data-original="{{ book.thumbnail_image.url }}" height="500px">
+                {% else %}
+                <img class="lazy" src="{% static 'book/images/not_available.png' %}" height="500px">
+                {% endif %}
             </a>
         </li>
         {% endfor %}
