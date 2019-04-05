@@ -17,8 +17,12 @@ WSL-LIB
     {% for book in book_list %}
         <li class="item">
             <a href="{% url 'book:detail' book.id %}" target="_blank">
+                {% if book.thumbnail_image %}
                 <img class="lazy" src="{% static 'book/images/loading.png' %}"
                      data-original="{{ book.thumbnail_image.url }}">
+                {% else %}
+                <img class="lazy" src="{% static 'book/images/not_available.png' %}"d>
+                {% endif %}
             </a>
         </li>
     {% endfor %}

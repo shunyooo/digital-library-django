@@ -7,8 +7,14 @@
 
 <div class="book-detail">
     <div class="book-image-wrap lazy-container">
-        <img class="lazy" data-original="{{ object.thumbnail_image.url }}">
+        {% if object.thumbnail_image %}
+        <img class="lazy" src="{% static 'book/images/loading.png' %}"
+             data-original="{{ object.thumbnail_image.url }}">
+        {% else %}
+        <img class="lazy" src="{% static 'book/images/not_available.png' %}">
+        {% endif %}
     </div>
+
 
     <div class="detail-right">
         <form method="post">
@@ -18,7 +24,8 @@
                 </div>
             </div>
             <ul class="tags-edit">
-                <li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input" value={{book_tag_list_str}}></li>
+                <li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input"
+                           value={{book_tag_list_str}}></li>
             </ul>
             <div class="row">
                 <div class="col-12">
@@ -105,7 +112,7 @@
         /*visibility: hidden;*/
     }
 
-    .tags-edit li{
+    .tags-edit li {
         text-decoration: none;
         list-style: none;
     }
@@ -151,7 +158,7 @@
         color: #333;
     }
 
-     .tagsinput .tag .tag-remove:before, .tagsinput .tag .tag-remove:after{
+    .tagsinput .tag .tag-remove:before, .tagsinput .tag .tag-remove:after {
         background-color: #9DA2A9;
     }
 

@@ -7,7 +7,12 @@
 
 <div class="book-detail">
     <div class="book-image-wrap lazy-container">
-        <img class="lazy" data-original="{{ object.thumbnail_image.url }}">
+        {% if object.thumbnail_image %}
+        <img class="lazy" src="{% static 'book/images/loading.png' %}"
+             data-original="{{ object.thumbnail_image.url }}" height="500px">
+        {% else %}
+        <img class="lazy" src="{% static 'book/images/not_available.png' %}" height="500px">
+        {% endif %}
     </div>
 
     <div class="detail-right">
