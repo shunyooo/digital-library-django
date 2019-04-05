@@ -28,7 +28,7 @@ services:
       - ./static:/static
     ports:
       - 8000:8000
-      - 8888:10080
+      - 10080:8888
     depends_on:
       - db
       - redis
