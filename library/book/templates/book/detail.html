@@ -18,7 +18,7 @@
             </ul>
             <a href="{% url 'book:update' book.id %}" class="tag-edit-a"><i class="material-icons tag-edit-icon">
                 edit
-            </i><span class="tag-edit-text">編集する<span></a>
+            </i><span class="tag-edit-text">編集する</span></a>
         </div>
 
         <div class="title">
@@ -117,6 +117,8 @@
 
     .tag-edit-a {
         position: relative;
+        display: inline-block;
+        width: 140px;
     }
 
     .tag-edit-text {
