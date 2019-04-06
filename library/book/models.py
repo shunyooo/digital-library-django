@@ -59,6 +59,7 @@ class Author(models.Model):
 class Book(models.Model):
     """本."""
     title = models.CharField(max_length=200, unique=True)
+    description = models.TextField(null=True)
     pdf_file = models.FileField(max_length=500, null=True)
     zip_file = models.FileField(max_length=500, null=True)
     thumbnail_image = models.ImageField(max_length=500, null=True)
