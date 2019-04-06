@@ -41,7 +41,7 @@ class HomeView(View):
         ]
 
         # タグ付き本のピックアップ
-        valid_tag_q = Tag.objects.annotate(_book_count=Count('books')).filter(_book_count__gt=0).all()[:3]
+        valid_tag_q = Tag.objects.annotate(_book_count=Count('books')).filter(_book_count__gt=0).order_by('updated_at')[:3]
         for i, tag in enumerate(valid_tag_q):
             section_list.append({
                 "section_type": "book_list",

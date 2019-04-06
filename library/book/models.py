@@ -30,6 +30,9 @@ class Tag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
+    class Meta:
+        ordering = ('content',)
+
     def __str__(self):
         return self.content
 
@@ -82,6 +85,9 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('book:detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ('created_at',)
 
 
 class BookImage(models.Model):
