@@ -73,9 +73,9 @@ class Book(models.Model):
     # info系
     description = models.TextField(null=True)
     isbn = models.CharField(max_length=200, unique=True, null=True)
-    sub_title = models.TextField(null=True)
+    sub_title = models.CharField(max_length=500, null=True)
     price = models.PositiveIntegerField(default=0)
-    sales_at = models.DateTimeField(auto_now=True, null=True) 
+    sales_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
