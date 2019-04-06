@@ -65,7 +65,7 @@ class BookListView(ListView):
         # タイトル
         q_title_list = self.request.GET.getlist("title")
         for q in q_title_list:
-            result_qs = result_qs.filter(title__contains=q)
+            result_qs = result_qs.filter(title__icontains=q)
 
         # タグ
         q_tag_list = self.request.GET.getlist("tag")
@@ -75,7 +75,7 @@ class BookListView(ListView):
         # 著者
         q_author_list = self.request.GET.getlist("author")
         for q in q_author_list:
-            result_qs = result_qs.filter(author__name__contains=q)
+            result_qs = result_qs.filter(author__name__icontains=q)
 
         logging.debug(result_qs.query)
 
