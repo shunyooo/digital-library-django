@@ -27,7 +27,7 @@ class Tag(models.Model):
     """タグ."""
     content = models.CharField(max_length=255, unique=True, db_index=True)
     book_count = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Category(models.Model):
     """カテゴリ."""
     content = models.CharField('カテゴリ名', unique=True, max_length=255)
     book_count = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
@@ -49,7 +49,7 @@ class Author(models.Model):
     """著者."""
     name = models.CharField(max_length=200, unique=True)
     book_count = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
@@ -67,7 +67,7 @@ class Book(models.Model):
     tag = models.ManyToManyField(Tag, related_name='books', default=default_tag, )
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='books', default=default_category, )
     status = models.IntegerField(default=BOOK_STATUS_CREATED)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     # info系
@@ -89,7 +89,7 @@ class BookImage(models.Model):
     image = models.ImageField(max_length=500)
     page = models.IntegerField()
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='images', )
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
