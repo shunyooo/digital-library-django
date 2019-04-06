@@ -7,23 +7,29 @@ WSL-LIB| HOME
 
 {% block content %}
 
-<div class="book-list-section">
-
-    {% for book_section in book_section_list %}
-    <div class="book-list-header clearfix">
-        <div class="book-list-title">{{book_section.title}}</div>
-        <div class="book-list-more">
-            {% if book_section.key == 'tag' %}
-            <a href="{% url 'book:list' %}?tag={{book_section.title}}">もっと見る ▶︎</a>
-            {% else %}
-            <a href="{% url 'book:list' %}">もっと見る ▶︎</a>
-            {% endif %}
-        </div>
+{% for section in section_list %}
+<div class="lib-section {{section.bg_color}}">
+    <div class="lib-section-header clearfix">
+        <div class="lib-section-title">{{section.section_title}}</div>
+        {% if section.section_sub_title %}
+        <div class="lib-section-sub-title">{{section.section_sub_title}}</div>
+        {% endif %}
+        <div class="lib-section-header-border"></div>
+        <!--<div class="book-list-more">-->
+        <!--{% if book_section.key == 'tag' %}-->
+        <!--<a href="{% url 'book:list' %}?tag={{book_section.title}}">もっと見る ▶︎</a>-->
+        <!--{% else %}-->
+        <!--<a href="{% url 'book:list' %}">もっと見る ▶︎</a>-->
+        <!--{% endif %}-->
+        <!--</div>-->
     </div>
 
+
+    {% if section.section_type == 'book_list' %}
+    <!-- 本リスト -->
     <ul class="horizontal-list lazy-container">
-        {% for book in book_section.list %}
-        <li class="item">
+        {% for book in section.book_list %}
+        <li class="book-item">
             <a href="{% url 'book:detail' book.id %}" target="_blank">
                 {% if book.thumbnail_image %}
                 <img class="lazy" src="{% static 'book/images/loading.png' %}"
@@ -35,9 +41,24 @@ WSL-LIB| HOME
         </li>
         {% endfor %}
     </ul>
-
-    {% endfor %}
+    {% elif section.section_type == 'tag_list'%}
+    <!-- タグリスト -->
+    <div class="tags-wrapper">
+        <ul class="tags">
+            {% for tag in section.tag_list %}
+            <li class="tag-item"><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}<span>{{tag.book_count}}</span></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 </div>
+{% if section.border_bottom is not none %}
+<div class="{{section.border_bottom}}"></div>
+{% endif %}
+
+{% endfor %}
+
 
 {% endblock %}
 
@@ -66,9 +87,6 @@ WSL-LIB| HOME
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'book/css/booklist.css' %}"/>
 <style>
-    .container {
-        max-width: 90%;
-    }
 
     .horizontal-list {
         overflow-x: auto;
@@ -77,7 +95,7 @@ WSL-LIB| HOME
         padding: 40px 60px;
     }
 
-    .item {
+    .book-item {
         /* 横スクロール用 */
         display: inline-block;
         /* 見た目調整 */
@@ -89,14 +107,25 @@ WSL-LIB| HOME
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
     }
 
-    .item a {
+    .book-item a {
         display: inline-block;
         height: 100%;
     }
 
-    .item img {
+    .book-item img {
         height: auto;
         width: 279px;
     }
+
+    .bg-brown {
+        background-color: #EFEFEF;
+    }
+
+    .border-brown {
+        height: 10px;
+        width: 100%;
+        background-color: #EFEFEF;
+    }
+
 </style>
 {% endblock %}

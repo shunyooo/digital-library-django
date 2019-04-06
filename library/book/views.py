@@ -30,19 +30,29 @@ def _get_tag_context():
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         # 新着, 適当なタグを探して紐づく本, 10件を10回ぐらいループ
-        book_section_list = [
-            {"title": "新着アップロード", "list": Book.objects.order_by('-created_at').all()[:10], "key": "new"}
+        section_list = [
+            {"section_type": "book_list", "section_title": "Recent Upload",
+             "section_sub_title": "最近アップロードされた本たち",
+             "book_list": Book.objects.order_by('-created_at').all()[:10], "book_key": "new",},
+            {"section_type": "tag_list", "section_title": "Tag", "section_sub_title": "タグから本を探そう",
+             "tag_list": Tag.objects.filter(book_count__gt=0),
+             "bg_color": 'bg-brown',
+             },
         ]
 
-        # TODO: ここで集計せずbook_countでちゃんと入れておくように
-        for tag in Tag.objects.annotate(_book_count=Count('books')).filter(_book_count__gt=0).all()[:10]:
-            book_section_list.append({
-                "title": tag.content,
-                "list": tag.books.all()[:10],
-                "key": "tag",
+        # タグ付き本のピックアップ
+        valid_tag_q = Tag.objects.annotate(_book_count=Count('books')).filter(_book_count__gt=0).all()[:3]
+        for i, tag in enumerate(valid_tag_q):
+            section_list.append({
+                "section_type": "book_list",
+                "section_title": f"Pickup Books {i+1}",
+                "section_sub_title": f"{tag.content}のタグが付いている本たち",
+                "book_list": tag.books.all()[:10],
+                "book_key": "tag",
+                'border_bottom': 'border-brown'
             })
 
-        context = {'book_section_list': book_section_list}
+        context = {'section_list': section_list}
         context.update(_get_tag_context())
         return render(request, "book/index.html", context=context)
 

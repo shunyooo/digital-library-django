@@ -1,11 +1,24 @@
-.book-list-section {
-    margin-top: 50px;
+.lib-section {
+    padding: 45px 0;
 }
 
-.book-list-title {
-    float: left;
-    font-size: 1.5rem;
+.lib-section-title {
+    font-family: 'Fira Sans', sans-serif;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 34px;
     font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.4px;
+}
+
+.lib-section-sub-title {
+    text-align: center;
+    font-size: 0.9rem;
+    padding-top: 8px;
+    margin-top: -25px;
+    margin-bottom: -5px;
+    padding-bottom: 30px;
 }
 
 .book-list-more {
@@ -14,7 +27,80 @@
     margin-top: 15px;
 }
 
-.book-list-header {
-    border-bottom: solid 1px #000000;
-    padding: 0 20px 10px 20px;
+.lib-section-header {
+    /*padding: 0 20px 10px 20px;*/
+}
+
+.lib-section-header-border {
+    margin: 0 auto;
+    background-color: #404040;
+    width: 8%;
+    height: 5px;
+}
+
+.tags-wrapper {
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 90%;
+}
+
+ul.tags {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.tags li {
+    display: inline-block;
+    margin: 0 0.6em 1em 0;
+    padding: 0;
+}
+
+ul.tags li a {
+    position: relative;
+    display: inline-block;
+    max-width: 400px;
+    height: 38px;
+    line-height: 36px;
+    padding: 0 3em 0 1.4em;
+    background-color: #fff;
+    /*border: 1px solid #9DA2A9;*/
+    border-radius: 6px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #333;
+    font-size: 17px;
+    text-decoration: none;
+    -webkit-transition: .2s;
+    transition: .2s;
+    color: #5B5B5B;
+}
+
+ul.tags li span {
+    position: absolute;
+    top: 5.5px;
+    right: 13px;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    line-height: 23px;
+    background-color: #C6C6C6;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+ul.tags li a:hover {
+    background-color: #3498db;
+    /*border: 1px solid #3498db;*/
+    color: #fff;
+}
+
+ul.tags li a:hover span {
+    background-color: #fff;
+    color: #3498db;
 }
