@@ -95,7 +95,7 @@ class BookDetailView(DetailView):
 
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ('title',)
+    fields = ('thumbnail_image', 'title', 'sub_title', 'description', )
     template_name = "book/update.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
