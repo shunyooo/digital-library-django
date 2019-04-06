@@ -80,21 +80,18 @@ WSL-LIB| {% if search_key %} {{ search_key }}{% else %} 新着{% endif %}の本
     .item {
         /* 横スクロール用 */
         display: inline-block;
-        /* 見た目調整 */
-        height: auto;
+    }
+
+    .item a {
+        display: inline-block;
         margin: 16px 40px 16px 0;
         font-size: 48px;
         /*background: rgba(255, 0, 0, 0.4);*/
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
     }
 
-    .item a {
-        display: inline-block;
-        height: 100%;
-    }
-
     .item img {
-        width: 250px;
+        height: 350px;
     }
 </style>
 {% endblock %}
