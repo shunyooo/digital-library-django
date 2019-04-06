@@ -33,7 +33,7 @@ class Command(BaseCommand):
 
         print(f'{len(pdf_path_list)}件のPDFが見つかりました。\n内{len(target_pdf_path_list)}件が未登録です。\nDBに登録しますか？')
         yn_input = input('y/n: ')
-        if 'n' in yn_input:
+        if 'n' in yn_input.lower():
             print('cancel')
             return
 
