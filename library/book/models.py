@@ -59,7 +59,6 @@ class Author(models.Model):
 class Book(models.Model):
     """本."""
     title = models.CharField(max_length=200, unique=True)
-    description = models.TextField(null=True)
     pdf_file = models.FileField(max_length=500, null=True)
     zip_file = models.FileField(max_length=500, null=True)
     thumbnail_image = models.ImageField(max_length=500, null=True)
@@ -70,6 +69,13 @@ class Book(models.Model):
     status = models.IntegerField(default=BOOK_STATUS_CREATED)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    # info系
+    description = models.TextField(null=True)
+    isbn = models.CharField(max_length=200, unique=True, null=True)
+    sub_title = models.TextField(null=True)
+    price = models.PositiveIntegerField(default=0)
+    sales_at = models.DateTimeField(auto_now=True, null=True) 
 
     def __str__(self):
         return self.title
