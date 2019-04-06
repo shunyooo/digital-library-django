@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     # コマンドが実行された際に呼ばれるメソッド
     def handle(self, *args, **options):
-        tag = options['tag']
+        tag = options['tag'][0]
         contains_pat_list = options['contains']
         allocate_tag(tag, contains_pat_list)
 
