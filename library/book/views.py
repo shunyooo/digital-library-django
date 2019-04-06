@@ -141,6 +141,13 @@ class BookUpdateView(UpdateView):
         print('form_valid!! ', result)
         return result
 
+    def get_form(self, form_class=None):
+        form = super(BookUpdateView, self).get_form(form_class)
+        form.fields['thumbnail_image'].required = False
+        form.fields['sub_title'].required = False
+        form.fields['description'].required = False
+        return form
+
 
 class BookDeleteView(DeleteView):
     model = Book
