@@ -43,6 +43,12 @@
                     {% endif %}
                 </li>
             </ul>
+
+            <div class="description" >
+                {% if object.description %}
+                    {{ object.description }}
+                {% endif %}
+            </div>
         </div>
 
         <div class="flex-margin"></div>
@@ -191,6 +197,9 @@
         flex-direction: row;
     }
 
+    .description {
+        padding: 0 1rem;
+    }
 
 </style>
 
