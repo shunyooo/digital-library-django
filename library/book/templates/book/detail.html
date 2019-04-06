@@ -1,6 +1,10 @@
 {% extends 'book/base_with_header.html' %}
 {% load static%}
 
+{% block title %}
+WSL-LIB| {{ object.title }}
+{% endblock %}
+
 {% block content %}
 
 <div class="book-detail">

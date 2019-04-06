@@ -2,7 +2,7 @@
 {% load static%}
 
 {% block title %}
-WSL-LIB
+WSL-LIB| {% if search_key %} {{ search_key }} {% else %} 新着{% endif %}の本
 {% endblock %}
 
 {% block content %}

@@ -55,6 +55,16 @@ class BookListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
         context.update(_get_tag_context())
+
+        # meta タイトル用
+        search_key = ''
+        for key in ['title', 'tag', 'author']:
+            value_list = self.request.GET.getlist(key)
+            search_key += ' '.join(value_list)
+
+        context.update({'search_key': search_key})
+        print('get_context_data!!!!')
+        print(context)
         return context
 
     def get_queryset(self):
