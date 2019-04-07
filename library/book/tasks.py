@@ -23,6 +23,7 @@ import zipfile
 from subprocess import Popen, PIPE
 import shutil
 
+
 @task
 def update_book_data(book_id, pdf_path, thumbnail_tmp_dir):
     """
@@ -105,6 +106,7 @@ def handle_uploaded_file(f, author_name=None, category=None):
         # 該当ディレクトリ作成
         _dir, _file = os.path.split(f.name)
         pdf_title, _ = os.path.splitext(_file)
+        pdf_title = escape_pdf_name(pdf_title)
         save_dir = f'./media/{pdf_title}'
         os.makedirs(save_dir)
 
@@ -175,6 +177,10 @@ def extract_pdf_title(path):
     filename = os.path.basename(path)
     title, _ = os.path.splitext(filename)
     return title
+
+
+def escape_pdf_name(name):
+    return re.sub(r'\[|\]|\?|\*', "-", name)
 
 
 def page_count(pdf_path, userpw=None):
