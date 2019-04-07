@@ -29,8 +29,8 @@
 .header-form {
     position: absolute;
     top: 20px;
-    left: 190px;
-    width: 50%;
+    left: 20%;
+    width: 60%;
     font-size: 13px;
     min-width: 300px;
 }
@@ -140,8 +140,7 @@ select:-moz-focusring {
     position: absolute;
     bottom: 0px;
     right: 0px;
-    /*    width: ;*/
-    min-width: 300px;
+    min-width: 150px;
     height: 36px;
 }
 
