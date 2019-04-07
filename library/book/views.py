@@ -115,7 +115,7 @@ class BookDetailView(DetailView):
 
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ('thumbnail_image', 'title', 'sub_title', 'description', )
+    fields = ('isbn', 'title', 'sub_title', 'description', )
     template_name = "book/update.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -153,9 +153,9 @@ class BookUpdateView(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(BookUpdateView, self).get_form(form_class)
-        form.fields['thumbnail_image'].required = False
         form.fields['sub_title'].required = False
         form.fields['description'].required = False
+        form.fields['isbn'].required = False
         return form
 
 

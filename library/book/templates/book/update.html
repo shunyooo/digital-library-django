@@ -8,6 +8,24 @@ WSL-LIB| 削除確認
 
 {% block content %}
 
+<template id="isbn-result-template">
+    <div class="isbn-result row">
+        <div class="res-thumbnail">
+            <img/>
+        </div>
+        <div class="res-right">
+            <div class="caption"></div>
+            <div class="res-title"></div>
+            <div class="res-author"></div>
+            <div class="res-publisher"></div>
+            <!--<div class="isbn-button-wrapper">-->
+            <!--<div class="btn btn-primary isbn-button-reflect">反映</div>-->
+            <!--<div class="btn btn-primary isbn-button-reflect-only-blank">空白箇所のみ反映</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</template>
+
 <div class="book-detail">
     <div class="book-image-wrap lazy-container">
         {% if object.thumbnail_image %}
@@ -21,23 +39,31 @@ WSL-LIB| 削除確認
 
     <div class="detail-right">
         <form method="post">
-            <div class="row">
-                <div class="col-12">
-                    {% bootstrap_form form layout='horizontal' %}
-                </div>
-            </div>
             <ul class="tags-edit">
                 <li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input"
                            value={{book_tag_list_str}}></li>
             </ul>
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-primary">保存</button>
+                    {% if object.isbn is none %}
+                    <div class="form-caption">
+                        ISBNコードを入れてもらえると助かります。
+                        <a href="https://www.books.or.jp/"> PubDBで検索 </a>
+                    </div>
+                    {% endif %}
+                    {% bootstrap_form form layout='horizontal' %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 button-wrapper">
                     {% if object.status == 0 %}
                     <a class="btn btn-danger disabled" href="{% url 'book:delete' book.id %}">処理中は削除できません</a>
                     {% else %}
                     <a class="btn btn-danger" href="{% url 'book:delete' book.id %}">削除</a>
                     {% endif %}
+                    <button class="btn btn-primary">保存</button>
+                    <a class="btn btn-outline-secondary" href="javascript:void(0);"
+                       onclick="window.history.back();">戻る</a>
                 </div>
             </div>
             {% csrf_token %}
@@ -91,6 +117,58 @@ WSL-LIB| 削除確認
         });
 
         // $('.tags-edit').css('visibility', 'visible');
+        const $input_isbn = $('#id_isbn')
+        $input_isbn.on('input', (e) => {
+            const isbn = $input_isbn.val()
+            const opendb_url = "https://api.openbd.jp/v1/get?isbn=" + isbn;
+            console.log(isbn, opendb_url);
+
+            $.ajax({
+                url: opendb_url,
+                type: 'GET',
+            })
+            // Ajaxリクエストが成功した時発動
+                .done((data) => {
+                    $('.book-detail .isbn-result').remove()
+
+                    // 要素の作成
+                    const isbn_content = $('#isbn-result-template')[0].content
+                    const isbn_clone = document.importNode(isbn_content, true);
+                    const set_isbn_content = () => {
+                        $input_isbn.parent().parent().after(isbn_clone);
+                    }
+
+                    console.log(data);
+                    if (data[0] != null) {
+                        const summary = data[0]['summary']
+                        $('.res-thumbnail img', isbn_clone).prop({src: summary.cover})
+                        $('.res-title', isbn_clone).text('【 ※ 確認してください 】')
+                        $('.res-title', isbn_clone).text(summary.title)
+                        $('.res-author', isbn_clone).text(summary.author)
+                        $('.res-publisher', isbn_clone).text(summary.publisher)
+                        set_isbn_content()
+
+                        // 反映ボタンが押されたら
+                        // $('.isbn-button-reflect').onclick((e)=>{
+                        //     $('#id_title').val(summary.title)
+                        // })
+                    }
+                    else {
+                        $('.res-title', isbn_clone).text('見つかりません')
+                        set_isbn_content()
+                    }
+
+                })
+                // Ajaxリクエストが失敗した時発動
+                .fail((data) => {
+                    // $('.result').html(data);
+                    console.log(data);
+                })
+                // Ajaxリクエストが成功・失敗どちらでも発動
+                .always((data) => {
+
+                });
+        })
 
     });
 </script>
@@ -163,6 +241,33 @@ WSL-LIB| 削除確認
 
     .tagsinput .tag .tag-remove:before, .tagsinput .tag .tag-remove:after {
         background-color: #9DA2A9;
+    }
+
+    .button-wrapper .btn {
+        margin-right: 10px;
+    }
+
+    .isbn-result {
+        padding: 15px;
+    }
+
+    .res-thumbnail {
+        float: left;
+    }
+
+    .res-thumbnail img {
+        width: 140px;
+    }
+
+    .res-right {
+        font-size: 0.9rem;
+        margin-left: 15px;
+        float: right;
+    }
+
+    .form-caption{
+        padding: 10px;
+        font-size: 0.9rem;
     }
 
 </style>
