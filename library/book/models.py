@@ -65,6 +65,7 @@ class Book(models.Model):
     pdf_file = models.FileField(max_length=500, null=True)
     zip_file = models.FileField(max_length=500, null=True)
     thumbnail_image = models.ImageField(max_length=500, null=True)
+    thumbnail_small_image = models.ImageField(max_length=500, null=True)
     page_count = models.PositiveIntegerField()
     author = models.ManyToManyField(Author, related_name='books', default=default_author, )
     tag = models.ManyToManyField(Tag, related_name='books', default=default_tag, )
