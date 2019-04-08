@@ -42,8 +42,11 @@ def deleted_book(sender, instance, **kwargs):
     # NOTE: Bookのフォルダがpdf_fileの一つ上にある前提。
     if instance.pdf_file:
         book_dir = os.path.dirname(instance.pdf_file.path)
-        logging.debug(f'shutil delete {book_dir}')
-        shutil.rmtree(book_dir)
+        if os.path.isdir(book_dir):
+            logging.debug(f'shutil delete {book_dir}')
+            shutil.rmtree(book_dir)
+        else:
+            logging.warning(f'book media dir not found: {book_dir}')
 
 
 def update_tag_book_count(book, count_func):
