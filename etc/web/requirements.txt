@@ -21,3 +21,4 @@ ipython==7.1.1
 django-bootstrap4==0.0.8
 django-extensions==2.1.6
 jupyter==1.0.0
+django-imagekit==4.0.2

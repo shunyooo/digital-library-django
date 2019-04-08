@@ -23,6 +23,8 @@ import zipfile
 from subprocess import Popen, PIPE
 import shutil
 
+from library.settings import MEDIA_ROOT
+
 
 @task
 def update_book_data(book_id, pdf_path, thumbnail_tmp_dir):
@@ -43,10 +45,11 @@ def update_book_data(book_id, pdf_path, thumbnail_tmp_dir):
 
     # サムネイル設定
     thumbnail_path_new = f'{thumbnail_tmp_dir}/thumbnail.png'
+    logging.debug(f'thumbnail_path_new: {thumbnail_path_new}')
     convert_from_path(pdf_path, last_page=1, output_folder=thumbnail_tmp_dir, fmt='png')
     thumbnail_path_old = sorted(glob.glob(f'{thumbnail_tmp_dir}/*.png'))[0]
     os.rename(thumbnail_path_old, thumbnail_path_new)
-    _book.thumbnail_image = thumbnail_path_new
+    _book.thumbnail_origin_image = thumbnail_path_new
     _book.save()
 
 
@@ -107,7 +110,7 @@ def handle_uploaded_file(f, author_name=None, category=None):
         _dir, _file = os.path.split(f.name)
         pdf_title, _ = os.path.splitext(_file)
         pdf_title = escape_pdf_name(pdf_title)
-        save_dir = f'./media/{pdf_title}'
+        save_dir = os.path.join(MEDIA_ROOT, pdf_title)
         os.makedirs(save_dir)
 
         # PDF保存

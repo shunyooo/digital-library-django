@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'bootstrap4',
     'django_extensions',
+    'imagekit',
 ]
 
 
@@ -128,7 +129,7 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/'
 
-MEDIA_ROOT = BASE_DIR
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
