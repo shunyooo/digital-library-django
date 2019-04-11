@@ -109,8 +109,8 @@ def handle_uploaded_file(f, author_name=None, category=None):
         # 該当ディレクトリ作成
         _dir, _file = os.path.split(f.name)
         pdf_title, _ = os.path.splitext(_file)
-        pdf_title = escape_pdf_name(pdf_title)
-        save_dir = os.path.join(MEDIA_ROOT, pdf_title)
+        pdf_title_escaped = escape_pdf_name(pdf_title)
+        save_dir = f'./media/{pdf_title_escaped}'
         os.makedirs(save_dir)
 
         # PDF保存
