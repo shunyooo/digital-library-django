@@ -72,6 +72,12 @@ WSL-LIB| {{ object.title }}
             <a href="#" class="square_btn not_found">zipが見つかりません</a>
             {% endif %}
 
+            {% if object.pdf_file %}
+            <a href="{{ object.pdf_file.url }}" class="square_btn">pdfをブラウザで開く</a>
+            {% else %}
+            <a href="#" class="square_btn not_found">pdfが見つかりません</a>
+            {% endif %}
+
             <!--<a href="#" class="square_btn">ビューワーを開く</a>-->
         </div>
 
