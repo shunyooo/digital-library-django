@@ -22,13 +22,13 @@ services:
     build: ./etc/web
     container_name: library.web
     command: >
-      bash -c "./manage.py runserver 0.0.0.0:8000 & celery -A library worker -l info -c 4"
+      bash -c "sh /wait.sh db root password sh /run.sh"
     volumes:
       - ./library:/app
       - ./static:/static
     ports:
-      - 8000:8000
-      - 10080:8888
+      - 8000:8000  # app
+      - 10080:8888 # jupyter
     depends_on:
       - db
       - redis
