@@ -85,6 +85,7 @@ class Book(models.Model):
     sub_title = models.CharField(max_length=500, null=True)
     price = models.PositiveIntegerField(default=0)
     sales_at = models.DateTimeField(auto_now=True, null=True)
+    publisher_name = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return self.title
