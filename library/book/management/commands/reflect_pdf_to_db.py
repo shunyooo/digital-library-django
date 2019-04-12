@@ -9,36 +9,54 @@ class Command(BaseCommand):
     help = 'Reflect Existing PDF to DB'
 
     def add_arguments(self, parser):
-        parser.add_argument('pdf', nargs='+', type=str)
+        parser.add_argument('pdf_dir', nargs='+', type=str)
+        parser.add_argument('--f', action='store_true')
 
     # コマンドが実行された際に呼ばれるメソッド
     def handle(self, *args, **options):
-        pdf_path_list = []
-        for pdf in options['pdf']:
-            for file_path in files(pdf, only_ext_list=['.pdf']):
-                pdf_path_list.append(file_path)
+        # pdf fileの走査
+        taget_pdf_path_list = []
+        for pdf in options['pdf_dir']:
+            taget_pdf_path_list += list(files(pdf, only_ext_list=['.pdf']))
+        target_pdf_name_list = [extract_title(path) for path in taget_pdf_path_list]
 
-        pdf_title_list = [extract_title(path) for path in pdf_path_list]
-        exist_pdf_title_list = list(Book.objects.filter(title__in=pdf_title_list).values_list('title', flat=True))
-        exist_index_list = [pdf_title_list.index(title) for title in exist_pdf_title_list]
-        dellist = lambda items, indexes: [item for index, item in enumerate(items) if index not in indexes]
-        target_pdf_path_list = dellist(pdf_path_list, exist_index_list)
+        # DBにすでにあるpdfを全取得
+        db_pdf_path_list = [book.pdf_file.name for book in Book.objects.all()]
+        db_pdf_name_list = [extract_title(path) for path in db_pdf_path_list]
+
+        # 未登録の本を抽出
+        unregistered_pdf_path_list = [path for name, path in zip(target_pdf_name_list, taget_pdf_path_list)
+                                      if name not in db_pdf_name_list]
 
         njoin = lambda _list: '\n'.join(_list)
         print(f"""
-【登録済み】\n{njoin([path for path in pdf_path_list if path not in target_pdf_path_list])}
+【登録済み】\n{njoin([path for path in target_pdf_name_list if path not in unregistered_pdf_path_list])}
 
-【未登録】\n{njoin(target_pdf_path_list)}
+【未登録】\n{njoin(unregistered_pdf_path_list)}
         """)
 
-        print(f'{len(pdf_path_list)}件のPDFが見つかりました。\n内{len(target_pdf_path_list)}件が未登録です。\nDBに登録しますか？')
-        yn_input = input('y/n: ')
-        if 'n' in yn_input.lower():
-            print('cancel')
+        print(f'{len(taget_pdf_path_list)}件のPDFが見つかりました。\nその内{len(unregistered_pdf_path_list)}件が未登録です。')
+
+        is_all_registered = len(unregistered_pdf_path_list) == 0
+        if is_all_registered:
+            print('\n全件登録済みです！終了します...')
             return
 
-        pdf_count = len(target_pdf_path_list)
-        for i, pdf_path in enumerate(target_pdf_path_list):
+        is_force = '--f' in options and not options['--f']
+        if not is_force:
+            print('DBに登録しますか？')
+            while (True):
+                yn_input = input('y/n: ').lower()
+                if 'y' == yn_input:
+                    break
+                elif 'n' == yn_input:
+                    print('cancel')
+                    return
+                else:
+                    print('入力が不正です')
+
+        pdf_count = len(unregistered_pdf_path_list)
+        for i, pdf_path in enumerate(unregistered_pdf_path_list):
             with open(pdf_path, 'r') as f:
                 print(f'[{i+1}/{pdf_count}] {pdf_path}を登録します...')
                 handle_uploaded_file(f)
