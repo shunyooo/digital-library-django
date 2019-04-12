@@ -42,7 +42,7 @@ class Command(BaseCommand):
             print('\n全件登録済みです！終了します...')
             return
 
-        is_force = '--f' in options
+        is_force = 'f' in options and options['f']
         if not is_force:
             print('DBに登録しますか？')
             while (True):
