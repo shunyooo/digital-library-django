@@ -73,7 +73,7 @@ WSL-LIB| {{ object.title }}
             {% endif %}
 
             {% if object.pdf_file %}
-            <a href="{{ object.pdf_file.url }}" class="square_btn">pdfをブラウザで開く</a>
+            <a href="{{ object.pdf_file.url }}" class="square_btn" target="_blank">pdfをブラウザで開く</a>
             {% else %}
             <a href="#" class="square_btn not_found">pdfが見つかりません</a>
             {% endif %}
