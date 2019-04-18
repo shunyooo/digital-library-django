@@ -17,6 +17,7 @@ services:
     volumes:
       - library.db.volume:/var/lib/mysql
       - ./etc/sql:/docker-entrypoint-initdb.d
+    restart: always
 
   web:
     build: ./etc/web
@@ -32,8 +33,10 @@ services:
     depends_on:
       - db
       - redis
+    restart: always
 
   redis:
     image: redis:4.0.10
     ports:
     - 6379:6379
+    restart: always
