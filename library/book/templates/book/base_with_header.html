@@ -29,19 +29,19 @@
     <div class="header-menu-left">
         <ul class="nav">
             <!--<li><a href="#">タグ<i class="material-icons nav-icon">-->
-                <!--arrow_drop_down-->
+            <!--arrow_drop_down-->
             <!--</i></a>-->
-                <!--<ul>-->
-                    <!--{% for tag in tag_list %}-->
-                        <!--<li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}</a></li>-->
-                    <!--{% endfor %}-->
-                <!--</ul>-->
+            <!--<ul>-->
+            <!--{% for tag in tag_list %}-->
+            <!--<li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}</a></li>-->
+            <!--{% endfor %}-->
+            <!--</ul>-->
             <!--</li>-->
         </ul>
     </div>
     <div class="header-menu-right">
         <ul class="right-nav-wrapper">
-            <li><a href="{% url 'book:want' %}" target="_blank">欲しい本リスト</a></li>
+            <li><a href="{% url 'book:want' %}">欲しい本リスト</a></li>
             <li><a href="{% url 'book:upload' %}" target="_blank">アップロード</a></li>
             <!--<li><a href="#">My本棚</a></li>-->
             <!--<li><a href="#">会員登録</a></li>-->
