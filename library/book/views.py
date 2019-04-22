@@ -9,7 +9,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 from book.forms import FileFieldForm
-from book.models import Book, Tag
+from book.models import Book, Tag, WantBook
 from book.tasks import handle_uploaded_file
 from django.views.generic.edit import FormView, UpdateView, DeleteView
 
@@ -33,7 +33,7 @@ class HomeView(View):
         section_list = [
             {"section_type": "book_list", "section_title": "Recent Upload",
              "section_sub_title": "最近アップロードされた本たち",
-             "book_list": Book.objects.order_by('-created_at').all()[:10], "book_key": "new",},
+             "book_list": Book.objects.order_by('-created_at').all()[:10], "book_key": "new", },
             {"section_type": "tag_list", "section_title": "Tag", "section_sub_title": "タグから本を探そう",
              "tag_list": Tag.objects.filter(book_count__gt=0),
              "bg_color": 'bg-brown',
@@ -55,6 +55,18 @@ class HomeView(View):
         context = {'section_list': section_list}
         context.update(_get_tag_context())
         return render(request, "book/index.html", context=context)
+
+
+class WantBookListView(ListView):
+    model = WantBook
+    context_object_name = "want_book_list"
+    template_name = "book/want_list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WantBookListView, self).get_context_data(**kwargs)
+        context.update(_get_tag_context())
+        print(context)
+        return context
 
 
 class BookListView(ListView):
@@ -115,7 +127,7 @@ class BookDetailView(DetailView):
 
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ('isbn', 'title', 'sub_title', 'description', )
+    fields = ('isbn', 'title', 'sub_title', 'description',)
     template_name = "book/update.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):

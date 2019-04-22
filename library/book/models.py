@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.db import models
 
-from book.constants import BOOK_STATUS_CREATED
+from book.constants import BOOK_STATUS_CREATED, WANT_BOOK_STATUS_CREATED
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
@@ -107,3 +107,19 @@ class BookImage(models.Model):
 
     class Meta:
         ordering = ['page']
+
+
+class WantBook(models.Model):
+    title = models.CharField(max_length=200, unique=True, null=False)
+    caption = models.TextField(null=True)
+    image = models.FileField(max_length=500, null=True)
+    author_name = models.CharField(max_length=200, null=True)
+    status = models.IntegerField(default=WANT_BOOK_STATUS_CREATED)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('-created_at',)
