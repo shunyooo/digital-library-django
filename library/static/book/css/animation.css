@@ -1,0 +1,37 @@
+.grow_height {
+    /* growHeight */
+    -webkit-transform: scale(0);
+    -webkit-animation: growHeight 0.2s ease forwards;
+}
+
+.move_in {
+    /* openSpace -> moveIn */
+
+    -webkit-transform: translateX(-50px);
+    -webkit-animation: fadeIn 1s, openSpace 0.2s ease forwards, moveIn 0.2s ease forwards;
+}
+
+@-webkit-keyframes growHeight {
+    to {
+        max-height: 100%;
+        opacity: 1;
+        -webkit-transform: scale(1);
+    }
+}
+
+@-webkit-keyframes openSpace {
+    to {
+        max-height: 100%;
+    }
+}
+
+@-webkit-keyframes moveIn {
+    to {
+        -webkit-transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}

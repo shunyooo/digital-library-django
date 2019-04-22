@@ -1,0 +1,297 @@
+input {
+    outline: 0;
+    border: 0;
+    display: block;
+}
+
+.mv-textbox {
+    display: block;
+    max-height: 48px;
+    padding: 20px 8px 4px 8px;
+    width: 100%;
+    height: 48px;
+    position: relative;
+}
+
+.mv-textbox input[type="text"],
+.mv-textbox input[type="url"],
+.mv-textbox input[type="tel"],
+.mv-textbox input[type="number"],
+.mv-textbox input[type="color"],
+.mv-textbox input[type="email"],
+.mv-textbox input[type="password"] {
+    width: 90%;
+    padding: 8px 4px 6px 4px;
+    font-size: 1.2em;
+    background: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0.67);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.mv-textbox input[type="text"]:disabled,
+.mv-textbox input[type="url"]:disabled,
+.mv-textbox input[type="tel"]:disabled,
+.mv-textbox input[type="number"]:disabled,
+.mv-textbox input[type="color"]:disabled,
+.mv-textbox input[type="email"]:disabled,
+.mv-textbox input[type="password"]:disabled {
+    border-bottom: 2px dotted rgba(0, 0, 0, 0.4);
+}
+
+.mv-textbox input[type="text"]:disabled ~ label,
+.mv-textbox input[type="url"]:disabled ~ label,
+.mv-textbox input[type="tel"]:disabled ~ label,
+.mv-textbox input[type="number"]:disabled ~ label,
+.mv-textbox input[type="color"]:disabled ~ label,
+.mv-textbox input[type="email"]:disabled ~ label,
+.mv-textbox input[type="password"]:disabled ~ label {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.mv-textbox input[type="text"] ~ label,
+.mv-textbox input[type="url"] ~ label,
+.mv-textbox input[type="tel"] ~ label,
+.mv-textbox input[type="number"] ~ label,
+.mv-textbox input[type="color"] ~ label,
+.mv-textbox input[type="email"] ~ label,
+.mv-textbox input[type="password"] ~ label {
+    font-size: 1.2em;
+    color: rgba(0, 0, 0, 0.67);
+    display: block;
+    position: absolute;
+    top: 24px;
+    left: 12px;
+    pointer-events: none;
+    margin-right: 12px;
+    transition: all 0.2s;
+}
+
+.mv-textbox input[type="text"] ~ .error,
+.mv-textbox input[type="url"] ~ .error,
+.mv-textbox input[type="tel"] ~ .error,
+.mv-textbox input[type="number"] ~ .error,
+.mv-textbox input[type="color"] ~ .error,
+.mv-textbox input[type="email"] ~ .error,
+.mv-textbox input[type="password"] ~ .error {
+    width: 88%;
+    position: absolute;
+    bottom: -5px;
+    left: 16px;
+    color: rgba(0, 0, 0, 0);
+    font-size: 0.8em;
+    pointer-events: none;
+    transition: all 0.2s;
+}
+
+.mv-textbox input[type="text"] ~ .error:before,
+.mv-textbox input[type="url"] ~ .error:before,
+.mv-textbox input[type="tel"] ~ .error:before,
+.mv-textbox input[type="number"] ~ .error:before,
+.mv-textbox input[type="color"] ~ .error:before,
+.mv-textbox input[type="email"] ~ .error:before,
+.mv-textbox input[type="password"] ~ .error:before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #2196f3;
+    position: absolute;
+    bottom: -10px;
+    left: -8px;
+    margin-left: 50%;
+    visibility: visible;
+    transition: all 0.2s;
+}
+
+.mv-textbox input[type="text"]:not([value=""]) ~ label,
+.mv-textbox input[type="url"]:not([value=""]) ~ label,
+.mv-textbox input[type="tel"]:not([value=""]) ~ label,
+.mv-textbox input[type="number"]:not([value=""]) ~ label,
+.mv-textbox input[type="color"]:not([value=""]) ~ label,
+.mv-textbox input[type="email"]:not([value=""]) ~ label,
+.mv-textbox input[type="password"]:not([value=""]) ~ label {
+    font-size: 0.8em;
+    top: 8px;
+}
+
+.mv-textbox input[type="text"]:focus ~ label,
+.mv-textbox input[type="url"]:focus ~ label,
+.mv-textbox input[type="tel"]:focus ~ label,
+.mv-textbox input[type="number"]:focus ~ label,
+.mv-textbox input[type="color"]:focus ~ label,
+.mv-textbox input[type="email"]:focus ~ label,
+.mv-textbox input[type="password"]:focus ~ label {
+    font-size: 0.8em;
+    top: 8px;
+}
+
+.mv-textbox input[type="text"]:focus ~ .error:before,
+.mv-textbox input[type="url"]:focus ~ .error:before,
+.mv-textbox input[type="tel"]:focus ~ .error:before,
+.mv-textbox input[type="number"]:focus ~ .error:before,
+.mv-textbox input[type="color"]:focus ~ .error:before,
+.mv-textbox input[type="email"]:focus ~ .error:before,
+.mv-textbox input[type="password"]:focus ~ .error:before {
+    width: 100%;
+    margin: 0;
+}
+
+.mv-textbox input[type="text"]:invalid:not(:focus):not([value=""]) ~ .error,
+.mv-textbox input[type="url"]:invalid:not(:focus):not([value=""]) ~ .error,
+.mv-textbox input[type="tel"]:invalid:not(:focus):not([value=""]) ~ .error,
+.mv-textbox input[type="number"]:invalid:not(:focus):not([value=""]) ~ .error,
+.mv-textbox input[type="color"]:invalid:not(:focus):not([value=""]) ~ .error,
+.mv-textbox input[type="email"]:invalid:not(:focus):not([value=""]) ~ .error,
+.mv-textbox input[type="password"]:invalid:not(:focus):not([value=""]) ~ .error {
+    color: #f44336;
+}
+
+.mv-textbox input[type="text"]:invalid:not(:focus):not([value=""]) ~ .error:before,
+.mv-textbox input[type="url"]:invalid:not(:focus):not([value=""]) ~ .error:before,
+.mv-textbox input[type="tel"]:invalid:not(:focus):not([value=""]) ~ .error:before,
+.mv-textbox input[type="number"]:invalid:not(:focus):not([value=""]) ~ .error:before,
+.mv-textbox input[type="color"]:invalid:not(:focus):not([value=""]) ~ .error:before,
+.mv-textbox input[type="email"]:invalid:not(:focus):not([value=""]) ~ .error:before,
+.mv-textbox input[type="password"]:invalid:not(:focus):not([value=""]) ~ .error:before {
+    margin: 0;
+    width: 100%;
+    background: #f44336;
+}
+
+.mv-textbox input[type="text"]:valid:not(:focus) ~ .error:before,
+.mv-textbox input[type="url"]:valid:not(:focus) ~ .error:before,
+.mv-textbox input[type="tel"]:valid:not(:focus) ~ .error:before,
+.mv-textbox input[type="number"]:valid:not(:focus) ~ .error:before,
+.mv-textbox input[type="color"]:valid:not(:focus) ~ .error:before,
+.mv-textbox input[type="email"]:valid:not(:focus) ~ .error:before,
+.mv-textbox input[type="password"]:valid:not(:focus) ~ .error:before {
+    margin: 0;
+    width: 100%;
+    background: #4caf50;
+}
+
+.mv-textbox input[type="text"] ~ .info,
+.mv-textbox input[type="url"] ~ .info,
+.mv-textbox input[type="tel"] ~ .info,
+.mv-textbox input[type="number"] ~ .info,
+.mv-textbox input[type="color"] ~ .info,
+.mv-textbox input[type="email"] ~ .info,
+.mv-textbox input[type="password"] ~ .info {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    margin: 8px -16px 8px 8px;
+    padding: 0 16px 0 0;
+    border-radius: 100%;
+    color: rgba(0, 0, 0, 0.67);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mv-textbox input[type="text"] ~ .info .tooltip,
+.mv-textbox input[type="url"] ~ .info .tooltip,
+.mv-textbox input[type="tel"] ~ .info .tooltip,
+.mv-textbox input[type="number"] ~ .info .tooltip,
+.mv-textbox input[type="color"] ~ .info .tooltip,
+.mv-textbox input[type="email"] ~ .info .tooltip,
+.mv-textbox input[type="password"] ~ .info .tooltip {
+    width: auto;
+    max-width: 90%;
+    position: absolute;
+    top: -6px;
+    right: 24px;
+    transform: translateX(100%) scale(0.8);
+    background: rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 2px;
+    white-space: pre;
+    font-size: 0.8em;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.mv-textbox input[type="text"] ~ .info .tooltip:before,
+.mv-textbox input[type="url"] ~ .info .tooltip:before,
+.mv-textbox input[type="tel"] ~ .info .tooltip:before,
+.mv-textbox input[type="number"] ~ .info .tooltip:before,
+.mv-textbox input[type="color"] ~ .info .tooltip:before,
+.mv-textbox input[type="email"] ~ .info .tooltip:before,
+.mv-textbox input[type="password"] ~ .info .tooltip:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: -10px;
+    border-style: solid;
+    border-width: 8px 10px 8px 0;
+    border-color: transparent rgba(0, 0, 0, 0.9) transparent transparent;
+    z-index: -1;
+}
+
+.mv-textbox input[type="text"] ~ .info:hover,
+.mv-textbox input[type="url"] ~ .info:hover,
+.mv-textbox input[type="tel"] ~ .info:hover,
+.mv-textbox input[type="number"] ~ .info:hover,
+.mv-textbox input[type="color"] ~ .info:hover,
+.mv-textbox input[type="email"] ~ .info:hover,
+.mv-textbox input[type="password"] ~ .info:hover {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.mv-textbox input[type="text"] ~ .info:hover .tooltip,
+.mv-textbox input[type="url"] ~ .info:hover .tooltip,
+.mv-textbox input[type="tel"] ~ .info:hover .tooltip,
+.mv-textbox input[type="number"] ~ .info:hover .tooltip,
+.mv-textbox input[type="color"] ~ .info:hover .tooltip,
+.mv-textbox input[type="email"] ~ .info:hover .tooltip,
+.mv-textbox input[type="password"] ~ .info:hover .tooltip,
+.tooltip:hover {
+    visibility: visible;
+    opacity: 1;
+    right: 0;
+    transform: translateX(100%);
+}
+
+.mv-textbox input[type="text"]:disabled ~ .info,
+.mv-textbox input[type="url"]:disabled ~ .info,
+.mv-textbox input[type="tel"]:disabled ~ .info,
+.mv-textbox input[type="number"]:disabled ~ .info,
+.mv-textbox input[type="color"]:disabled ~ .info,
+.mv-textbox input[type="email"]:disabled ~ .info,
+.mv-textbox input[type="password"]:disabled ~ .info {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.mv-textbox input[type="text"]:disabled ~ .info .tooltip,
+.mv-textbox input[type="url"]:disabled ~ .info .tooltip,
+.mv-textbox input[type="tel"]:disabled ~ .info .tooltip,
+.mv-textbox input[type="number"]:disabled ~ .info .tooltip,
+.mv-textbox input[type="color"]:disabled ~ .info .tooltip,
+.mv-textbox input[type="email"]:disabled ~ .info .tooltip,
+.mv-textbox input[type="password"]:disabled ~ .info .tooltip {
+    background: rgba(0, 0, 0, 0.67);
+}
+
+.mv-textbox input[type="text"]:disabled ~ .info .tooltip:before,
+.mv-textbox input[type="url"]:disabled ~ .info .tooltip:before,
+.mv-textbox input[type="tel"]:disabled ~ .info .tooltip:before,
+.mv-textbox input[type="number"]:disabled ~ .info .tooltip:before,
+.mv-textbox input[type="color"]:disabled ~ .info .tooltip:before,
+.mv-textbox input[type="email"]:disabled ~ .info .tooltip:before,
+.mv-textbox input[type="password"]:disabled ~ .info .tooltip:before {
+    border-color: transparent rgba(0, 0, 0, 0.67) transparent transparent;
+}
+
+.mv-textbox input[type="text"]:disabled ~ .info:hover,
+.mv-textbox input[type="url"]:disabled ~ .info:hover,
+.mv-textbox input[type="tel"]:disabled ~ .info:hover,
+.mv-textbox input[type="number"]:disabled ~ .info:hover,
+.mv-textbox input[type="color"]:disabled ~ .info:hover,
+.mv-textbox input[type="email"]:disabled ~ .info:hover,
+.mv-textbox input[type="password"]:disabled ~ .info:hover {
+    color: rgba(0, 0, 0, 0.67);
+}
