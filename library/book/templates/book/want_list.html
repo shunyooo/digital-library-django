@@ -58,8 +58,8 @@ WSL-LIB| 欲しい本リスト
             </div>
 
             <div class="want-submit-wrapper-small">
-                <a href="#" class="square_btn want-search-small">検索</a>
-                <a href="#" class="square_btn want-submit-text-small">テキストを追加</a>
+                <a href="javascript:void(0);" class="square_btn want-search-small">検索</a>
+                <a href="javascript:void(0);" class="square_btn want-submit-text-small">テキストを追加</a>
             </div>
         </li>
         <div class="book-search-result">
@@ -159,11 +159,26 @@ WSL-LIB| 欲しい本リスト
             });
         });
 
-        $('.mv-textbox input').attr('value', "")
-        $('.mv-textbox input').attr('onkeyup', "this.setAttribute('value', this.value);")
-
-
         const $title_input = $('#title-input-small');
+
+        // css用
+        $title_input.attr('value', "")
+
+        $title_input.on('focus', function () {
+            console.log('focus')
+            const scroll_top = $('.want-form-wrapper-small').offset().top - 10;
+            $('html, body').animate({scrollTop: scroll_top});
+        });
+
+        // input textや、ボタンの色を入力値によって設定する
+        const set_input_text_style = () => {
+            // ボタン
+            set_buttons_class();
+            // cssのinputスタイル用
+            const title = $title_input.val();
+            $title_input.attr('value', title);
+        };
+
         // 入力時にボタンの色に反映。
         const set_buttons_class = () => {
             const title = $title_input.val();
@@ -173,10 +188,13 @@ WSL-LIB| 欲しい本リスト
             } else {
                 $buttons.removeClass('not_found');
             }
-        }
-        set_buttons_class();
+        };
+
+        set_input_text_style();
         $title_input.on('input', (e) => {
-            set_buttons_class();
+            console.log('input')
+            set_input_text_style();
+            // hide_search_result(true);
         })
 
 
@@ -244,10 +262,14 @@ WSL-LIB| 欲しい本リスト
         }
 
 
-        // テキストを追加
+        // テキストのみを追加
         $('.want-submit-text-small').on('click', (e) => {
             const title = $title_input.val();
-            post_want_book(title, null, null)
+            post_want_book(title, null, null);
+            $('.book-search-result-list .book-search-result-item').remove();
+            hide_search_result(true);
+            $title_input.val('');
+            set_input_text_style();
         })
 
 
@@ -257,8 +279,11 @@ WSL-LIB| 欲しい本リスト
             console.log(title);
             rakuten_search(title);
         }
-        $title_input.on('change', (e) => {
-            title_rakuten_search();
+        // Enter 押下時
+        $title_input.on('keydown', (e) => {
+            if (e.key == 'Enter') {
+                title_rakuten_search();
+            }
         });
         $('.want-search-small').on('click', (e) => {
             title_rakuten_search();
@@ -323,16 +348,27 @@ WSL-LIB| 欲しい本リスト
                 }
 
                 current_search_result_list = _search_res;
-                $('.book-search-result-list').show(100);
-                $('.result-list-toggle-button').show(100);
+                hide_search_result(false);
             } else {
                 const book_clone = document.importNode(book_content, true);
                 $('.res-title', book_clone).text('見つかりません');
                 $('.res-button-wrapper', book_clone).remove();
                 $('.book-search-result-list').append(book_clone);
+                hide_search_result(false);
                 $('.result-list-toggle-button').hide();
             }
         }
+
+        // 結果を隠すか否か
+        const hide_search_result = (is_hide) => {
+            if (is_hide) {
+                $('.book-search-result-list').hide(100);
+                $('.result-list-toggle-button').hide(100);
+            } else {
+                $('.book-search-result-list').show(100);
+                $('.result-list-toggle-button').show(100);
+            }
+        };
 
         // toggleボタン
         $('.result-list-toggle-button').hide();
