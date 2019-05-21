@@ -201,6 +201,8 @@ WSL-LIB| 欲しい本リスト
         let current_search_result_list = []
         const api_want = "{% url 'book:wantbook-list'%}"
         $('.book-search-result-list').on('click', '.res-button-reflect', (e) => {
+            console.log(e.currentTarget);
+            $(e.currentTarget).addClass('small-disabled disabled');
             const index = $('.book-search-result-list .res-button-reflect').index(e.currentTarget);
             console.log('clicked', index, current_search_result_list[index]);
             const content = current_search_result_list[index]
@@ -604,6 +606,13 @@ WSL-LIB| 欲しい本リスト
     .res-button-reflect:hover {
         background-color: #0066C0;
     }
+
+    .small-disabled.disabled, .small-disabled.disabled:hover {
+        border-color: #C6C6C6;
+        background-color: #C6C6C6;
+        cursor: default;
+    }
+
 
 </style>
 {% endblock %}
