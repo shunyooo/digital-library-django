@@ -59,7 +59,7 @@ WSL-LIB| 欲しい本リスト
 
             <div class="want-submit-wrapper-small">
                 <a href="#" class="square_btn want-search-small">検索</a>
-                <a href="#" class="square_btn want-submit-small">テキストを追加</a>
+                <a href="#" class="square_btn want-submit-text-small">テキストを追加</a>
             </div>
         </li>
         <div class="book-search-result">
@@ -194,9 +194,16 @@ WSL-LIB| 欲しい本リスト
             console.log(data);
             const wantbook_content = $('#book-want-li-template')[0].content;
             const book_clone = document.importNode(wantbook_content, true);
-            $('.item-left img', book_clone).prop({src: data.image});
             $('.title', book_clone).text(data.title);
-            $('.author', book_clone).text(data.author_name);
+
+            if (!data.image) {
+                data.image = "{% static 'book/images/not_available.png' %}"
+            }
+            $('.item-left img', book_clone).prop({src: data.image});
+
+            if (data.author_name) {
+                $('.author', book_clone).text(data.author_name);
+            }
             $('.want-book-list').prepend(book_clone);
         }
 
@@ -206,9 +213,14 @@ WSL-LIB| 欲しい本リスト
         const post_want_book = (title, author, image_link) => {
             const data = {
                 'title': title,
-                'author_name': author,
-                'image': image_link,
             }
+            if (author) {
+                data.author_name = author
+            }
+            if (image_link) {
+                data.image = image_link
+            }
+
             console.log('post', data, api_want)
             $.ajax({
                 url: api_want,
@@ -230,6 +242,13 @@ WSL-LIB| 欲しい本リスト
 
                 });
         }
+
+
+        // テキストを追加
+        $('.want-submit-text-small').on('click', (e) => {
+            const title = $title_input.val();
+            post_want_book(title, null, null)
+        })
 
 
         // 検索へのイベント発火
@@ -306,8 +325,7 @@ WSL-LIB| 欲しい本リスト
                 current_search_result_list = _search_res;
                 $('.book-search-result-list').show(100);
                 $('.result-list-toggle-button').show(100);
-            }
-            else {
+            } else {
                 const book_clone = document.importNode(book_content, true);
                 $('.res-title', book_clone).text('見つかりません');
                 $('.res-button-wrapper', book_clone).remove();
@@ -321,7 +339,6 @@ WSL-LIB| 欲しい本リスト
         $('.result-list-toggle-button').on('click', (e) => {
             $('.book-search-result-list').toggle(100, 'linear');
         })
-
 
     });
 </script>
@@ -482,7 +499,7 @@ WSL-LIB| 欲しい本リスト
         padding: 11px;
     }
 
-    .want-submit-small {
+    .want-submit-text-small {
         margin-left: 10px;
         font-size: 0.9rem;
         height: 47px;
