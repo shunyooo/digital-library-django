@@ -16,7 +16,7 @@
 ## SETUP
 
 ```shell
-$ cd degital-library
+$ cd digital-library
 $ docker-compose up --build
 ```
 
@@ -32,7 +32,7 @@ $ docker-compose exec web bash
 起動から違う
 
 ```shell
-$ cd degital-library
+$ cd digital-library
 $ sh bin/docker-compose-build-run.sh
 ```
 
