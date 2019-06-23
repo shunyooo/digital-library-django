@@ -144,14 +144,14 @@ def handle_uploaded_file(f, author_name=None, category=None):
                                     pdf_file=save_pdf_path,
                                     zip_file=save_zip_path)
 
+        # 非同期：情報更新：ページ数, サムネイル
+        logging.debug(f'update book data')
+        update_book_data.delay(_book.pk, save_pdf_path, save_dir)
+
         # 非同期：jpeg変換、保存
         save_imgs_dir = f'{save_dir}/images'
         logging.debug(f'save images {save_imgs_dir}')
         save_pdf2images.delay(_book.pk, save_pdf_path, save_imgs_dir)
-
-        # 非同期：情報更新：ページ数, サムネイル
-        logging.debug(f'update book data')
-        update_book_data.delay(_book.pk, save_pdf_path, save_dir)
 
         # ファイル情報取得
         # pdf_isnfo = extract_pdf_file_info(save_pdf_path)
