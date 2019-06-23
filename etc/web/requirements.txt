@@ -24,3 +24,4 @@ jupyter==1.0.0
 jupyter-contrib-nbextensions==0.5.1
 django-imagekit==4.0.2
 django-cors-headers==2.5.2
+slacker==0.13.0
