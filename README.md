@@ -1,4 +1,4 @@
-![image-20181106194500078](https://ws1.sinaimg.cn/large/006tNbRwgy1fwyj7i0lpwj30xu0cwh2s.jpg)
+![image](https://user-images.githubusercontent.com/17490886/59975693-c23fd480-95f5-11e9-821e-fe7a3861f615.png)
 
 研究室、少人数の仲間内で使うための電子図書館、電子ビューワーWebサイト
 
