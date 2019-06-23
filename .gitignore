@@ -6,3 +6,6 @@ static/*
 *.pdf
 
 library/media/*
+*/CACHE/*
+
+*/__pycache__
