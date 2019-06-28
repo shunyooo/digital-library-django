@@ -2,7 +2,14 @@
     position: relative;
     height: 100px;
     width: 100%;
-    background-color: #001734;
+    background-color: #001734
+}
+
+.header-inner {
+    max-width: 1280px;
+    position: relative;
+    height: 100%;
+    margin: 0 auto
 }
 
 .header .header-icon-title {
@@ -13,26 +20,25 @@
     transform: translateY(-50%);
     color: white;
     font-size: 27px;
-    line-height: 31px;
+    line-height: 31px
+}
+
+.header .header-icon-title a {
+    color: #FFF
 }
 
 .header .header-icon-title a {
     color: #FFF;
+    text-decoration: none
 }
-
-.header .header-icon-title a {
-    color: #FFF;
-    text-decoration: none;
-}
-
 
 .header-form {
     position: absolute;
     top: 20px;
-    left: 20%;
+    left: 16%;
     width: 60%;
     font-size: 13px;
-    min-width: 300px;
+    min-width: 300px
 }
 
 .header-form-input {
@@ -40,7 +46,7 @@
     outline: 0;
     background: white;
     width: 100%;
-    border: none;
+    border: none
 }
 
 .header-form-submit {
@@ -49,27 +55,31 @@
     background: #F1F1F1;
     color: #828c9a;
     border: none;
-    border-left: solid 0.5px #C6C6C6;
+    border-left: solid 0.5px #C6C6C6
 }
 
 .header-form-submit .fa-search {
     font-size: 20px;
     position: absolute;
     top: 30%;
-    left: 30%;
+    left: 30%
 }
 
-.select-wrap:after {
+.select-inner {
+    position: relative
+}
+
+.select-inner:after {
     z-index: 2;
     position: absolute;
     font-size: 30px;
-    left: 100px;
+    right: 16%;
     top: 0px;
     content: "\e5c5";
     font-family: "Material Icons";
     line-height: 40px;
     color: #7F878C;
-    pointer-events: none;
+    pointer-events: none
 }
 
 select {
@@ -93,26 +103,26 @@ select {
     width: 100%;
     border-radius: 0;
     border: none;
-    border-right: solid 0.5px #C6C6C6;
+    border-right: solid 0.5px #C6C6C6
 }
 
 select option {
     background-color: #fff;
-    color: #333;
+    color: #333
 }
 
 select::-ms-expand {
-    display: none;
+    display: none
 }
 
 select:-moz-focusring {
     color: transparent;
-    text-shadow: 0 0 0 #828c9a;
+    text-shadow: 0 0 0 #828c9a
 }
 
 .select-wrap {
     min-width: 100px;
-    width: 200px;
+    width: 200px
 }
 
 .form-inputs-wrap {
@@ -124,7 +134,7 @@ select:-moz-focusring {
     display: -ms-flex;
     display: -o-flex;
     display: flex;
-    background-color: white;
+    background-color: white
 }
 
 .header-menu-left {
@@ -133,27 +143,27 @@ select:-moz-focusring {
     left: 190px;
     width: 50%;
     min-width: 300px;
-    height: 36px;
+    height: 36px
 }
 
 .header-menu-right {
     position: absolute;
     bottom: 0px;
     right: 0px;
-    min-width: 150px;
-    height: 36px;
+    min-width: 260px;
+    height: 36px
 }
 
 .right-nav-wrapper {
     height: 100%;
     margin: 0 auto;
     padding: 0;
-    display: flex;
+    display: flex
 }
 
 .right-nav-wrapper li {
     position: relative;
-    list-style: none;
+    list-style: none
 }
 
 .right-nav-wrapper li a {
@@ -167,7 +177,7 @@ select:-moz-focusring {
     background: #001734;
     transition: 0.5s;
     text-decoration: none;
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 
 .right-nav-wrapper li a::after {
@@ -180,13 +190,58 @@ select:-moz-focusring {
     background-color: #2E8DD5;
     transition: .3s;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    transform: translateX(-50%)
 }
 
 .right-nav-wrapper li a:hover::after {
-    width: 100%;
+    width: 100%
 }
 
-.right-nav-wrapper li a:hover{
-    background: #10386a;
+.right-nav-wrapper li a:hover {
+    background: #10386a
+}
+
+@media screen and (max-width:850px) {
+    .header .header-icon-title {
+        font-size: 20px;
+        line-height: 22px
+    }
+
+    .header-form {
+        left: 130px
+    }
+
+    .select-inner:after {
+        right: 5%
+    }
+
+}
+
+@media screen and (max-width:450px) {
+    .header .header-icon-title {
+        position: relative;
+        font-size: 20px;
+        line-height: 22px;
+        -webkit-transform: none;
+        transform: none;
+        top: 20px;
+        left: 30px;
+        max-width: 100px
+    }
+
+    .header {
+        position: relative;
+        height: 170px
+    }
+
+    .header-form {
+        top: 80px;
+        left: 30px;
+        width: calc(100% - 60px)
+    }
+
+    .select-inner:after {
+        right: 5% !important
+    }
+
 }

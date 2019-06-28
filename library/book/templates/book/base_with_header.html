@@ -9,44 +9,48 @@
 
 {% block header %}
 <div class="header">
-    <div class="header-icon-title">
-        <a href="{% url 'book:index' %}">DIGITAL<br>LIBRARY</a>
-    </div>
-    <form class="header-form"
-          action="{% url 'book:list' %}" method="get">
-        <div class="form-inputs-wrap">
-            <div class="select-wrap">
-                <select name="search-select">
-                    <option value="title">タイトル</option>
-                    <option value="tag">タグ</option>
-                    <option value="author">著者</option>
-                </select>
-            </div>
-            <input class="header-form-input" name="search-text" type="text" placeholder="フリーワードを入力">
-            <button class="header-form-submit" type="submit"><i class="fas fa-search"></i>検索</button>
+    <div class="header-inner">
+        <div class="header-icon-title">
+            <a href="{% url 'book:index' %}">DIGITAL<br>LIBRARY</a>
         </div>
-    </form>
-    <div class="header-menu-left">
-        <ul class="nav">
-            <!--<li><a href="#">タグ<i class="material-icons nav-icon">-->
-            <!--arrow_drop_down-->
-            <!--</i></a>-->
-            <!--<ul>-->
-            <!--{% for tag in tag_list %}-->
-            <!--<li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}</a></li>-->
-            <!--{% endfor %}-->
-            <!--</ul>-->
-            <!--</li>-->
-        </ul>
-    </div>
-    <div class="header-menu-right">
-        <ul class="right-nav-wrapper">
-            <li><a href="{% url 'book:want' %}">欲しい本リスト</a></li>
-            <li><a href="{% url 'book:upload' %}" target="_blank">アップロード</a></li>
-            <!--<li><a href="#">My本棚</a></li>-->
-            <!--<li><a href="#">会員登録</a></li>-->
-            <!--<li><a href="#">ログイン</a></li>-->
-        </ul>
+        <form class="header-form"
+              action="{% url 'book:list' %}" method="get">
+            <div class="form-inputs-wrap">
+                <div class="select-wrap">
+                    <div class="select-inner">
+                        <select name="search-select">
+                            <option value="title">タイトル</option>
+                            <option value="tag">タグ</option>
+                            <option value="author">著者</option>
+                        </select>
+                    </div>
+                </div>
+                <input class="header-form-input" name="search-text" type="text" placeholder="フリーワードを入力">
+                <button class="header-form-submit" type="submit"><i class="fas fa-search"></i>検索</button>
+            </div>
+        </form>
+<!--         <div class="header-menu-left">
+            <ul class="nav">
+                <li><a href="#">タグ<i class="material-icons nav-icon">
+                arrow_drop_down
+                </i></a>
+                <ul>
+                {% for tag in tag_list %}
+                <li><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}</a></li>
+                {% endfor %}
+                </ul>
+                </li>
+            </ul>
+        </div> -->
+        <div class="header-menu-right">
+            <ul class="right-nav-wrapper">
+                <li><a href="{% url 'book:want' %}">欲しい本リスト</a></li>
+                <li><a href="{% url 'book:upload' %}" target="_blank">アップロード</a></li>
+                <!--<li><a href="#">My本棚</a></li>-->
+                <!--<li><a href="#">会員登録</a></li>-->
+                <!--<li><a href="#">ログイン</a></li>-->
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}
