@@ -9,7 +9,7 @@ import shutil
 
 
 @receiver(m2m_changed, sender=Book.tag.through)
-def chaned_book_tag(sender, instance, action, **kwargs):
+def changed_book_tag(sender, instance, action, **kwargs):
     '''
     book-tag が変更されたら tagのbookcountを変更。
     book 削除時に呼ばれないバグがある。
@@ -20,7 +20,7 @@ def chaned_book_tag(sender, instance, action, **kwargs):
     :return:
     '''
     tag_list = instance.tag.all()
-    logging.debug(f'action:{action} chaned_book_tag:{tag_list}')
+    logging.debug(f'action:{action} changed_book_tag:{tag_list}')
     count_func = lambda tag: Book.objects.filter(tag=tag).count()
     update_tag_book_count(instance, count_func)
 
