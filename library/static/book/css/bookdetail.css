@@ -199,7 +199,7 @@ ul.tags li a:hover span {
     padding: 40px 60px;
 }
 
-.item {
+.book-view-item {
 
     /* 横スクロール用 */
     display: inline-block;        /* 見た目調整 */
@@ -212,7 +212,7 @@ ul.tags li a:hover span {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
 
-.item img {
+.book-view-item img {
     height: 80vh;
     width: auto;
 }

@@ -87,7 +87,7 @@ WSL-LIB| {{ object.title }}
 <div class="book-viewer">
     <div class="viewer-area horizontal-list lazy-container">
         {% for book_image in object.images.all %}
-        <li class="item">
+        <li class="book-view-item">
             <img class="lazy" src="{% static 'book/images/loading.png' %}" data-original="{{ book_image.image.url }}"
                  width="100%">
         </li>
