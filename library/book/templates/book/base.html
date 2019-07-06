@@ -11,7 +11,6 @@
             <link href="https://fonts.googleapis.com/css?family=Fira+Sans:700,700i,800,800i,900,900i" rel="stylesheet">
             <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
             <link href="{% static 'lib/css/reset.css'%}" rel="stylesheet">
-            <link rel="stylesheet" type="text/css" href="{% static 'book/css/footer.css' %}?20190629"/>
             {% block extracss %}{% endblock %}
             <title>{% block title %}{% endblock %}</title>
             <link rel="apple-touch-icon" sizes="180x180" href="{% static 'book/favicon/apple-touch-icon.png' %}">
@@ -29,12 +28,8 @@
                 {% block content %}
                 {% endblock %}
             </div>
-            <footer>
-                <a class="faa-parent animated-hover" href="https://github.com/shunyooo/digital-library" target="github">
-                    <i class="fab fa-github footer-icon-github fa-3x fa-fh faa-wrench"></i>
-                <address>Design and Developed by Shunyo Kawamoto</address>
-            </a>
-        </footer>
+            {% block footer %}
+            {% endblock %}
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

@@ -3,7 +3,8 @@
 
 {% block extracss %}
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/header.css' %}?20190629"/>
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/header.css' %}?20190706"/>
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/footer.css' %}?20190706"/>
 <link rel="stylesheet" type="text/css" href="{% static 'book/css/dropdown.css' %}"/>
 {% endblock %}
 
@@ -55,6 +56,14 @@
 </div>
 {% endblock %}
 
+{% block footer %}
+<footer>
+    <a class="faa-parent animated-hover" href="https://github.com/shunyooo/digital-library" target="github">
+        <i class="fab fa-github footer-icon-github fa-3x fa-fh faa-wrench"></i>
+        <div class="info">Design and Developed by Shunyo Kawamoto</div>
+    </a>
+</footer>
+{% endblock %}
 
 {% block extrajs %}
 {{ block.super }}

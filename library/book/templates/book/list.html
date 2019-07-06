@@ -1,4 +1,4 @@
-{% extends 'book/base_with_header.html' %}
+{% extends 'book/base_with_header_footer.html' %}
 {% load static%}
 
 {% block title %}
@@ -55,6 +55,16 @@ WSL-LIB| {% if search_key %} {{ search_key }}{% else %} 新着{% endif %}の本
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'book/css/booklist.css' %}"/>
 <style>
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lib-container {
+        flex: 1;
+    }
+
     .container {
         max-width: 90%;
     }

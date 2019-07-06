@@ -1,17 +1,16 @@
 footer {
 	font-size: 80%;
-	width: 100%;
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 10px;
 	background-color: #313131
 }
 
-footer address {
+footer .info {
 	color: #fff;
 	letter-spacing: 2px;
 	font-style: normal;
-	padding-top: 10px
+	margin-top: 10px;
 }
 
 .footer-icon-github {
