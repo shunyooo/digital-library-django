@@ -26,6 +26,11 @@ import shutil
 from library.settings import MEDIA_ROOT
 from utils import slack
 
+from config import config
+HOST_URL = None
+if 'link' in config.keys() and 'HOST_URL' in config['link'].keys():
+    HOST_URL = config['link']['HOST_URL']
+
 @task
 def update_book_data(book_id, pdf_path, thumbnail_tmp_dir):
     """
@@ -100,9 +105,11 @@ def save_pdf2images(book_id, pdf_path, save_dir):
     # slackに通知
     notify_slack(_book)
 
+
 def notify_slack(book):
-    slack.post_slack(f'「{book.title}」が追加されました！')
-    slack.post_slack(file_path=book.thumbnail_origin_image)
+    slack.post_slack(f'「{book.title}」が追加されました！\nURL: {HOST_URL}/detail/{book.id}', 
+        file_path=book.thumbnail_origin_image, 
+        file_title=book.title)
 
 
 def handle_uploaded_file(f, author_name=None, category=None):

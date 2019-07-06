@@ -11,7 +11,7 @@ if 'slack' in config.keys():
     slacker = Slacker(API_KEY)
 
 
-def post_slack(_str=None, file_path=None, image_url=None, channel=None,):
+def post_slack(_str=None, file_title=None, file_path=None, image_url=None, channel=None,):
     print('post_slack', _str)
     if slacker is None:
         print('slacker is None')
@@ -20,7 +20,15 @@ def post_slack(_str=None, file_path=None, image_url=None, channel=None,):
     if channel is None:
         channel = CHANNEL
 
-    if _str:
+
+    if file_path:
+        slacker.files.upload(
+            file_path,
+            channels=[channel],
+            title=file_title,
+            initial_comment=_str,
+        )
+    elif _str:
         slacker.chat.post_message(channel,
                                   _str,
                                   icon_emoji=':thomas_bayes:',
@@ -29,11 +37,4 @@ def post_slack(_str=None, file_path=None, image_url=None, channel=None,):
                                       {
                                           "image_url": image_url
                                       }
-                                  ]
-                                  )
-
-    if file_path:
-        slacker.files.upload(
-            file_path,
-            channels=[channel],
-        )
+                                  ])
