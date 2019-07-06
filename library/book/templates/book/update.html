@@ -43,12 +43,12 @@ WSL-LIB| 削除確認
                 <li><input name="tags-edit-input" id="tags-edit-input" class="tags-edit-input"
                            value={{book_tag_list_str}}></li>
             </ul>
-            <div class="row">
+            <div class="row form-rows">
                 <div class="col-12">
                     {% if object.isbn is none %}
                     <div class="form-caption">
-                        ISBNコードを入れてもらえると助かります。
-                        <a href="https://www.books.or.jp/" target="pub_db"> PubDBで検索 </a>
+                        ▼ ISBNコードを入れてもらえると助かります。
+                        <a href="https://www.books.or.jp/" target="pub_db"> <i class="fas fa-search"></i> PubDBで検索 </a>
                     </div>
                     {% endif %}
                     {% bootstrap_form form layout='horizontal' %}
@@ -177,7 +177,7 @@ WSL-LIB| 削除確認
 
 {% block extracss %}
 {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}?20190706"/>
 <link rel="stylesheet" type="text/css" href="{% static 'lib/css/jquery.tagsinput-revisited.css' %}"/>
 <style>
     .container {
@@ -266,10 +266,13 @@ WSL-LIB| 削除確認
     }
 
     .form-caption{
-        padding: 10px;
+        padding: 10px 0;
         font-size: 0.9rem;
     }
 
+    .form-rows {
+        padding-top: 10px;
+    }
 </style>
 
 {% endblock %}

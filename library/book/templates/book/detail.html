@@ -57,7 +57,7 @@ WSL-LIB| {{ object.title }}
 
         <div class="flex-margin"></div>
 
-        <div class="buttton-area">
+        <div class="button-area">
 
             <!--{% if object.pdf_file %}-->
             <!--<a href="{{ object.pdf_file.url }}" class="square_btn">PDFで開く</a>-->
@@ -126,91 +126,6 @@ WSL-LIB| {{ object.title }}
 
 {% block extracss %}
 {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}?20190706"/>
 <link rel="stylesheet" type="text/css" href="{% static 'lib/css/jquery.tagsinput-revisited.css' %}"/>
-<style>
-    .container {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        max-width: none;
-    }
-
-    .tag-edit-a {
-        position: relative;
-        display: inline-block;
-        width: 140px;
-    }
-
-    .tag-edit-text {
-        font-size: 15px;
-        color: #c2c0c2;
-        position: absolute;
-        top: 10px;
-        width: 100px;
-    }
-
-    .tag-edit-icon {
-        font-size: 30px;
-        color: #c2c0c2;
-        position: relative;
-        display: inline-block;
-        height: 38px;
-        line-height: 35px;
-        background-color: #fff;
-        border-radius: 6px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        text-decoration: none;
-        -webkit-transition: .2s;
-        transition: .2s;
-    }
-
-    .tag-edit-icon:hover {
-        cursor: pointer;
-    }
-
-    .horizontal-list {
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-        padding: 40px 60px;
-    }
-
-    .item {
-        /* 横スクロール用 */
-        display: inline-block;
-        /* 見た目調整 */
-        /*width: 279px;*/
-        height: 500px;
-        width: auto;
-        margin: 16px 40px 16px 0;
-        font-size: 48px;
-        /*background: rgba(255, 0, 0, 0.4);*/
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    .item img {
-        height: 500px;
-        width: auto;
-    }
-
-    .book-viewer {
-        margin: 200px 0 90px 0;
-        background-color: #525659;
-        box-shadow: 0px 1px 10px 0px inset;
-    }
-
-    .detail-right-header {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .description {
-        padding: 0 1rem;
-    }
-
-</style>
-
 {% endblock %}
