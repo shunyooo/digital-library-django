@@ -39,9 +39,10 @@ def deleted_book(sender, instance, **kwargs):
     count_func = lambda tag: tag.book_count - 1
     update_tag_book_count(instance, count_func)
 
-    # NOTE: Bookのフォルダがpdf_fileの一つ上にある前提。
-    if instance.pdf_file:
-        book_dir = os.path.dirname(instance.pdf_file.path)
+    # NOTE: Bookのフォルダがzip_file, pdf_fileの一つ上にある前提。
+    instance_file = instance.pdf_file if instance.pdf_file else instance.zip_file
+    if instance_file:
+        book_dir = os.path.dirname(instance_file.path)
         if os.path.isdir(book_dir):
             logging.debug(f'shutil delete {book_dir}')
             shutil.rmtree(book_dir)
