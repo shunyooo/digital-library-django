@@ -196,7 +196,7 @@ ul.tags li a:hover span {
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-    padding: 40px 60px;
+    padding: 5vh 10vw;
 }
 
 .book-view-item {
@@ -204,17 +204,16 @@ ul.tags li a:hover span {
     /* 横スクロール用 */
     display: inline-block;        /* 見た目調整 */
 
-    /*width: 279px;*/
-    height: 80vh;
-    width: auto;
-    margin: 16px 20px 16px 0;
+    margin: 0 1vw 0 0;
     font-size: 48px;        /*background: rgba(255, 0, 0, 0.4);*/
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
 
-.book-view-item img {
-    height: 80vh;
+.book-view-item, .book-view-item img {
+    max-width:80vw;
+    max-height:80vh;
     width: auto;
+    height: auto;
 }
 
 .book-viewer {
