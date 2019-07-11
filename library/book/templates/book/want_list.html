@@ -1,618 +1,803 @@
-{% extends 'book/base_with_header_footer.html' %}
-{% load static%}
+{
+    % extends 'book/base_with_header_footer.html' %
+}
 
-{% block title %}
-WSL-LIB| 欲しい本リスト
-{% endblock %}
+{
+    % load static%
+}
 
-{% block content %}
+{
+    % block title %
+}
+
+WSL-LIB| 欲しい本リスト {
+    % endblock %
+}
+
+{
+    % block content %
+}
 
 <template id="book-search-result-template">
-    <div class="book-search-result-item row move_in">
-        <div class="res-thumbnail">
-            <img/>
-        </div>
-        <div class="res-right">
-            <div class="caption"></div>
-            <div class="res-title"></div>
-            <div class="res-author"></div>
-            <div class="res-publisher"></div>
-        </div>
-        <div>
-            <div class="res-button-wrapper">
-                <div class="btn btn-primary res-button-reflect">リストへ追加</div>
-            </div>
-        </div>
-    </div>
+<div class="book-search-result-item row move_in">
+<div class="res-thumbnail">
+<img/>
+</div>
+<div class="res-right">
+<div class="caption"></div>
+<div class="res-title"></div>
+<div class="res-author"></div>
+<div class="res-publisher"></div>
+</div>
+<div>
+<div class="res-button-wrapper">
+<div class="btn btn-primary res-button-reflect">リストへ追加</div>
+</div>
+</div>
+</div>
 </template>
 
 <template id="book-want-li-template">
-    <li class="item clearfix move_in">
-        <div class="item-left">
-            <img src="{% static 'book/images/loading.png' %}"/>
-        </div>
-        <div class="item-right">
-            <div class="title"></div>
-            <div class="author"></div>
-            <div class="caption"></div>
-        </div>
-    </li>
+<li class="item clearfix move_in">
+<div class="item-left">
+<img src="{% static 'book/images/loading.png' %}"/>
+</div>
+<div class="item-right">
+<div class="title"></div>
+<div class="author"></div>
+<div class="caption"></div>
+</div>
+</li>
 </template>
 
 <div class="">
 
-    <div class="lib-section-left-header clearfix">
-        <div class="lib-section-left-title">Want Books</div>
-        <div class="lib-section-left-sub-title">欲しい本リスト</div>
-        <!--<div class="lib-section-left-header-border"></div>-->
-    </div>
-
-    <div class="want-form-wrapper-small">
-        <li class="item clearfix">
-            <div class="mv-textbox title-textbox-small">
-                <input id="title-input-small"
-                       required=".+"
-                       type="text"/><label for="title-input-small">欲しい本のタイトルを検索</label>
-                <div class="error">
-                </div>
-            </div>
-
-            <div class="want-submit-wrapper-small">
-                <a href="javascript:void(0);" class="square_btn want-search-small">検索</a>
-                <a href="javascript:void(0);" class="square_btn want-submit-text-small">テキストを追加</a>
-            </div>
-        </li>
-        <div class="book-search-result">
-            <div class="book-search-result-list">
-
-            </div>
-            <div class="result-list-toggle-button"><i class="material-icons result-toggle-icon">
-                arrow_drop_up
-            </i></div>
-        </div>
-    </div>
-
-
-    <!--MARK: 詳細入力-->
-    <!--<form method="post" class="want-form-wrapper">-->
-    <!--<li class="item clearfix">-->
-    <!--<div class="item-left item-left-form">-->
-    <!--<img class="lazy" src="{% static 'book/images/not_available.png' %}">-->
-    <!--</div>-->
-    <!--<div class="item-right">-->
-    <!--<div class="mv-textbox title-textbox">-->
-    <!--<input id="title-input"-->
-    <!--required=".+"-->
-    <!--type="text"/><label for="title-input">タイトル</label>-->
-    <!--<div class="error">-->
-    <!--Invalid email address-->
-    <!--</div>-->
-    <!--<div class="info">-->
-    <!--<div class="tooltip">-->
-    <!--タイトルは必須項目です-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="mv-textbox author-textbox">-->
-    <!--<input id="author-input"-->
-    <!--required=".*"-->
-    <!--type="text"/><label for="title-input">著者</label>-->
-    <!--<div class="error">-->
-    <!--Invalid email address-->
-    <!--</div>-->
-    <!--<div class="info">-->
-    <!--<div class="tooltip">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="want-submit-wrapper">-->
-    <!--<a href="#" class="square_btn want-submit">欲しい書籍リストに追加</a>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<div class=""><textarea name="author-input" placeholder="備考"></textarea></div>&ndash;&gt;-->
-    <!--</div>-->
-
-    <!--</li>-->
-    <!--</form>-->
-
-    <div class="want-book-list lazy-container">
-
-        {% for wantbook in want_book_list %}
-        <li class="item clearfix">
-            <div class="item-left">
-                {% if wantbook.image %}
-                <img class="lazy" src="{% static 'book/images/loading.png' %}"
-                     data-original="{{ wantbook.image.url }}">
-                {% else %}
-                <img class="lazy" src="{% static 'book/images/not_available.png' %}">
-                {% endif %}
-            </div>
-            <div class="item-right">
-                <div class="title">{{wantbook.title}}</div>
-                <div class="author">{{wantbook.author_name|default_if_none:""}}</div>
-                <div class="caption">{{wantbook.caption|default_if_none:""}}</div>
-            </div>
-        </li>
-        {% endfor %}
-
-
-        {% csrf_token %}
-    </div>
+<div class="lib-section-left-header clearfix">
+<div class="lib-section-left-title">Want Books</div>
+<div class="lib-section-left-sub-title">欲しい本リスト</div>
+<!--<div class="lib-section-left-header-border"></div>-->
 </div>
 
-{% endblock %}
+<div class="want-form-wrapper-small">
+<li class="item clearfix">
+<div class="mv-textbox title-textbox-small">
+<input id="title-input-small"required=".+"type="text"/><label for="title-input-small">欲しい本のタイトルを検索</label>
+<div class="error">
+</div>
+</div>
 
-{% block extrajs %}
-{{ block.super }}
+<div class="want-submit-wrapper-small">
+<a href="javascript:void(0);"class="square_btn want-search-small">検索</a>
+<a href="javascript:void(0);"class="square_btn want-submit-text-small">テキストを追加</a>
+</div>
+</li>
+<div class="book-search-result">
+<div class="book-search-result-list">
+
+</div>
+<div class="result-list-toggle-button"><i class="material-icons result-toggle-icon">
+arrow_drop_up
+</i></div>
+</div>
+</div>
+
+
+<!--MARK: 詳細入力-->
+<!--<form method="post"class="want-form-wrapper">-->
+<!--<li class="item clearfix">-->
+<!--<div class="item-left item-left-form">-->
+<!--<img class="lazy"src="{% static 'book/images/not_available.png' %}">-->
+<!--</div>-->
+<!--<div class="item-right">-->
+<!--<div class="mv-textbox title-textbox">-->
+<!--<input id="title-input"-->
+<!--required=".+"-->
+<!--type="text"/><label for="title-input">タイトル</label>-->
+<!--<div class="error">-->
+<!--Invalid email address-->
+<!--</div>-->
+<!--<div class="info">-->
+<!--<div class="tooltip">-->
+<!--タイトルは必須項目です-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="mv-textbox author-textbox">-->
+<!--<input id="author-input"-->
+<!--required=".*"-->
+<!--type="text"/><label for="title-input">著者</label>-->
+<!--<div class="error">-->
+<!--Invalid email address-->
+<!--</div>-->
+<!--<div class="info">-->
+<!--<div class="tooltip">-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="want-submit-wrapper">-->
+<!--<a href="#"class="square_btn want-submit">欲しい書籍リストに追加</a>-->
+<!--</div>-->
+<!--&lt;
+!&ndash;
+<div class=""><textarea name="author-input"placeholder="備考"></textarea></div>&ndash;
+&gt;
+
+-->
+<!--</div>-->
+
+<!--</li>-->
+<!--</form>-->
+
+<div class="want-book-list lazy-container"> {
+    % for wantbook in want_book_list %
+}
+
+<li class="item clearfix">
+<div class="item-left"> {
+    % if wantbook.image %
+}
+
+<img class="lazy"src="{% static 'book/images/loading.png' %}"data-original="{{ wantbook.image.url }}"> {
+    % else %
+}
+
+<img class="lazy"src="{% static 'book/images/not_available.png' %}"> {
+    % endif %
+}
+
+</div>
+<div class="item-right">
+<div class="title"> {
+    {
+        wantbook.title
+    }
+
+}
+
+</div>
+<div class="author"> {
+    {
+        wantbook.author_name|default_if_none: ""
+    }
+
+}
+
+</div>
+<div class="caption"> {
+    {
+        wantbook.caption|default_if_none: ""
+    }
+
+}
+
+</div>
+</div>
+</li> {
+    % endfor %
+}
+
+{
+    % csrf_token %
+}
+
+</div>
+</div> {
+    % endblock %
+}
+
+{
+    % block extrajs %
+}
+
+{
+    {
+        block.super
+    }
+
+}
+
 <script src="{% static 'lib/js/jquery.lazyload.js' %}"></script>
 <script src="{% static 'lib/js/jquery.scrollstop.js' %}"></script>
 
 <script type="text/javascript">
-    $(function () {
-        $('.lazy-container').each((index, container) => {
-            console.log(container);
-            $(container).find('img.lazy').lazyload({
-                threshold: 500,    // 読み込み閾値 px
-                effect: 'fadeIn',  // 読み込みエフェクトも指定できる
-                container: container,
-            });
-        });
+$(function () {
+    $('.lazy-container').each((index, container) => {
+        console.log(container);
 
-        const $title_input = $('#title-input-small');
+        $(container).find('img.lazy').lazyload( {
+            threshold: 500, // 読み込み閾値 px
+            effect:'fadeIn', // 読み込みエフェクトも指定できる
+            container:container,
+        }
 
-        // css用
-        $title_input.attr('value', "")
+        );
+    }
 
-        $title_input.on('focus', function () {
-            console.log('focus')
-            const scroll_top = $('.want-form-wrapper-small').offset().top - 10;
-            $('html, body').animate({scrollTop: scroll_top});
-        });
+    );
+    const $title_input = $('#title-input-small');
 
-        // input textや、ボタンの色を入力値によって設定する
-        const set_input_text_style = () => {
-            // ボタン
-            set_buttons_class();
-            // cssのinputスタイル用
-            const title = $title_input.val();
-            $title_input.attr('value', title);
-        };
+    // css用
+    $title_input.attr('value', "")
 
-        // 入力時にボタンの色に反映。
-        const set_buttons_class = () => {
-            const title = $title_input.val();
-            const $buttons = $('.want-submit-wrapper-small *');
-            if (title == '') {
-                $buttons.addClass('not_found');
-            } else {
-                $buttons.removeClass('not_found');
-            }
-        };
+    $title_input.on('focus', function () {
+        console.log('focus')
+        const scroll_top = $('.want-form-wrapper-small').offset().top - 10;
 
+        $('html, body').animate( {
+            scrollTop: scroll_top
+        }
+
+        );
+    }
+
+    );
+
+    // input textや、ボタンの色を入力値によって設定する
+    const set_input_text_style = () => {
+        // ボタン
+        set_buttons_class();
+        // cssのinputスタイル用
+        const title = $title_input.val();
+        $title_input.attr('value', title);
+    }
+
+    ;
+
+    // 入力時にボタンの色に反映。
+    const set_buttons_class = () => {
+        const title = $title_input.val();
+        const $buttons = $('.want-submit-wrapper-small *');
+
+        if (title == '') {
+            $buttons.addClass('not_found');
+        }
+
+        else {
+            $buttons.removeClass('not_found');
+        }
+
+    }
+
+    ;
+    set_input_text_style();
+
+    $title_input.on('input', (e) => {
+        console.log('input')
         set_input_text_style();
-        $title_input.on('input', (e) => {
-            console.log('input')
-            set_input_text_style();
-            // hide_search_result(true);
-        })
+        // hide_search_result(true);
+    }
+
+    )
 
 
-        let current_search_result_list = []
-        const api_want = "{% url 'book:wantbook-list'%}"
-        $('.book-search-result-list').on('click', '.res-button-reflect', (e) => {
-            console.log(e.currentTarget);
-            $(e.currentTarget).addClass('small-disabled disabled');
-            const index = $('.book-search-result-list .res-button-reflect').index(e.currentTarget);
-            console.log('clicked', index, current_search_result_list[index]);
-            const content = current_search_result_list[index]
-            post_want_book(content.title, content.author, content.mediumImageUrl);
-        })
+    let current_search_result_list = []
+    const api_want ="{% url 'book:wantbook-list'%}"$('.book-search-result-list').on('click', '.res-button-reflect', (e) => {
+        console.log(e.currentTarget);
+        $(e.currentTarget).addClass('small-disabled disabled');
+        const index = $('.book-search-result-list .res-button-reflect').index(e.currentTarget);
+        console.log('clicked', index, current_search_result_list[index]);
+        const content = current_search_result_list[index]
+        post_want_book(content.title, content.author, content.mediumImageUrl);
+    }
+
+    )
 
 
-        const add_display_wantbook = (data) => {
+    const add_display_wantbook = (data) => {
+        console.log(data);
+        const wantbook_content = $('#book-want-li-template')[0].content;
+        const book_clone = document.importNode(wantbook_content, true);
+        $('.title', book_clone).text(data.title);
+
+        if (!data.image) {
+            data.image ="{% static 'book/images/not_available.png' %}"
+        }
+
+        $('.item-left img', book_clone).prop( {
+            src: data.image
+        }
+
+        );
+
+        if (data.author_name) {
+            $('.author', book_clone).text(data.author_name);
+        }
+
+        $('.want-book-list').prepend(book_clone);
+    }
+
+    // MARK: ADD POSTメソッド
+    const $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    console.log('$crf_token', $crf_token);
+
+    const post_want_book = (title, author, image_link) => {
+        const data = {
+            'title':title,
+        }
+
+        if (author) {
+            data.author_name = author
+        }
+
+        if (image_link) {
+            data.image = image_link
+        }
+
+        console.log('post', data, api_want)
+        $.ajax( {
+            url:api_want, type:'POST', dataType:'json', data:data, headers: {
+                "X-CSRFToken":$crf_token
+            }
+
+            ,
+        }
+
+        )
+        .done((data) => {
             console.log(data);
-            const wantbook_content = $('#book-want-li-template')[0].content;
-            const book_clone = document.importNode(wantbook_content, true);
-            $('.title', book_clone).text(data.title);
 
-            if (!data.image) {
-                data.image = "{% static 'book/images/not_available.png' %}"
+            if (data.created) {
+                add_display_wantbook(data.wantbook);
             }
-            $('.item-left img', book_clone).prop({src: data.image});
 
-            if (data.author_name) {
-                $('.author', book_clone).text(data.author_name);
-            }
-            $('.want-book-list').prepend(book_clone);
         }
 
-        // MARK: ADD POSTメソッド
-        const $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
-        console.log('$crf_token', $crf_token);
-        const post_want_book = (title, author, image_link) => {
-            const data = {
-                'title': title,
-            }
-            if (author) {
-                data.author_name = author
-            }
-            if (image_link) {
-                data.image = image_link
-            }
-
-            console.log('post', data, api_want)
-            $.ajax({
-                url: api_want,
-                type: 'POST',
-                dataType: 'json',
-                data: data,
-                headers: {"X-CSRFToken": $crf_token},
-            })
-                .done((data) => {
-                    console.log(data);
-                    if (data.created) {
-                        add_display_wantbook(data.wantbook);
-                    }
-                })
-                .fail((data) => {
-                    console.log(data);
-                })
-                .always((data) => {
-
-                });
+        )
+        .fail((data) => {
+            console.log(data);
         }
 
-
-        // テキストのみを追加
-        $('.want-submit-text-small').on('click', (e) => {
-            const title = $title_input.val();
-            post_want_book(title, null, null);
-            $('.book-search-result-list .book-search-result-item').remove();
-            hide_search_result(true);
-            $title_input.val('');
-            set_input_text_style();
-        })
-
-
-        // 検索へのイベント発火
-        const title_rakuten_search = () => {
-            const title = $title_input.val();
-            console.log(title);
-            rakuten_search(title);
+        )
+        .always((data) => {
         }
-        // Enter 押下時
-        $title_input.on('keydown', (e) => {
-            if (e.key == 'Enter') {
-                title_rakuten_search();
-            }
-        });
-        $('.want-search-small').on('click', (e) => {
+
+        );
+    }
+
+    // テキストのみを追加
+    $('.want-submit-text-small').on('click', (e) => {
+        const title = $title_input.val();
+        post_want_book(title, null, null);
+        $('.book-search-result-list .book-search-result-item').remove();
+        hide_search_result(true);
+        $title_input.val('');
+        set_input_text_style();
+    }
+
+    )
+
+
+    // 検索へのイベント発火
+    const title_rakuten_search = () => {
+        const title = $title_input.val();
+        console.log(title);
+        rakuten_search(title);
+    }
+
+    // Enter 押下時
+    $title_input.on('keydown', (e) => {
+        if (e.key == 'Enter') {
             title_rakuten_search();
-        })
-
-        // 検索メソッド
-        const rakuten_applicationId = '1023108736065810201'
-        const rakuten_search = (title) => {
-            $('.want-search-small').addClass('not_found');
-            if (title == '') {
-                console.log('title is empty.')
-                $('.book-search-result-list .book-search-result-item').remove();
-                $('.result-list-toggle-button').hide(100);
-                return
-            }
-
-            const rakuten_book_search_url = `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?format=json&title=${title}&applicationId=${rakuten_applicationId}`
-            console.log(rakuten_book_search_url);
-            $.ajax({
-                url: rakuten_book_search_url,
-                type: 'GET',
-            })
-            // Ajaxリクエストが成功した時発動
-                .done((data) => {
-                    console.log(data, data.hits);
-                    set_el_rakuten_result(data);
-                })
-                // Ajaxリクエストが失敗した時発動
-                .fail((data) => {
-                    // $('.result').html(data);
-                    console.log(data);
-                })
-                // Ajaxリクエストが成功・失敗どちらでも発動
-                .always((data) => {
-                });
         }
 
-        // 検索結果反映メソッド
-        $('.book-search-result-list').hide();
-        const set_el_rakuten_result = (data) => {
+    }
+
+    );
+
+    $('.want-search-small').on('click', (e) => {
+        title_rakuten_search();
+    }
+
+    )
+
+    // 検索メソッド
+    const rakuten_applicationId ='1023108736065810201'const rakuten_search = (title) => {
+        $('.want-search-small').addClass('not_found');
+
+        if (title == '') {
+            console.log('title is empty.')
             $('.book-search-result-list .book-search-result-item').remove();
-            const book_content = $('#book-search-result-template')[0].content;
+            $('.result-list-toggle-button').hide(100);
+            return
+        }
 
-            if (data.hits > 0) {
-                const items = data.Items;
+        const rakuten_book_search_url = `https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?format=json&title=$ {
+            title
+        }
 
-                let _search_res = [];
-                for (const item of items) {
-                    const book_clone = document.importNode(book_content, true);
-                    const content = item.Item;
-                    _search_res.push(content);
-                    $('.res-thumbnail img', book_clone).prop({src: content.mediumImageUrl});
-                    $('.res-title', book_clone).text(content.title);
-                    $('.res-author', book_clone).text(content.author);
-                    $('.res-publisher', book_clone).text(content.publisherName);
-                    $('.book-search-result-list').append(book_clone);
+        &applicationId=$ {
+            rakuten_applicationId
+        }
 
-                    // 効かない
-                    // $(book_clone).data('title', content.title)
-                    // $(book_clone).data('author_name', content.author)
-                    // $(book_clone).data('image_link', content.mediumImageUrl)
+        `
+        console.log(rakuten_book_search_url);
+
+        $.ajax( {
+            url: rakuten_book_search_url, type:'GET',
+        }
+
+        )
+        // Ajaxリクエストが成功した時発動
+        .done((data) => {
+            console.log(data, data.hits);
+            set_el_rakuten_result(data);
+        }
+
+        )
+        // Ajaxリクエストが失敗した時発動
+        .fail((data) => {
+            // $('.result').html(data);
+            console.log(data);
+        }
+
+        )
+        // Ajaxリクエストが成功・失敗どちらでも発動
+        .always((data) => {
+        }
+
+        );
+    }
+
+    // 検索結果反映メソッド
+    $('.book-search-result-list').hide();
+
+    const set_el_rakuten_result = (data) => {
+        $('.book-search-result-list .book-search-result-item').remove();
+        const book_content = $('#book-search-result-template')[0].content;
+
+        if (data.hits > 0) {
+            const items = data.Items;
+            let _search_res = [];
+
+            for (const item of items) {
+                const book_clone = document.importNode(book_content, true);
+                const content = item.Item;
+                _search_res.push(content);
+
+                $('.res-thumbnail img', book_clone).prop( {
+                    src: content.mediumImageUrl
                 }
 
-                current_search_result_list = _search_res;
-                hide_search_result(false);
-            } else {
-                const book_clone = document.importNode(book_content, true);
-                $('.res-title', book_clone).text('見つかりません');
-                $('.res-button-wrapper', book_clone).remove();
+                );
+                $('.res-title', book_clone).text(content.title);
+                $('.res-author', book_clone).text(content.author);
+                $('.res-publisher', book_clone).text(content.publisherName);
                 $('.book-search-result-list').append(book_clone);
-                hide_search_result(false);
-                $('.result-list-toggle-button').hide();
+                // 効かない
+                // $(book_clone).data('title', content.title)
+                // $(book_clone).data('author_name', content.author)
+                // $(book_clone).data('image_link', content.mediumImageUrl)
             }
+
+            current_search_result_list = _search_res;
+            hide_search_result(false);
         }
 
-        // 結果を隠すか否か
-        const hide_search_result = (is_hide) => {
-            if (is_hide) {
-                $('.book-search-result-list').hide(100);
-                $('.result-list-toggle-button').hide(100);
-            } else {
-                $('.book-search-result-list').show(100);
-                $('.result-list-toggle-button').show(100);
-            }
-        };
+        else {
+            const book_clone = document.importNode(book_content, true);
+            $('.res-title', book_clone).text('見つかりません');
+            $('.res-button-wrapper', book_clone).remove();
+            $('.book-search-result-list').append(book_clone);
+            hide_search_result(false);
+            $('.result-list-toggle-button').hide();
+        }
 
-        // toggleボタン
-        $('.result-list-toggle-button').hide();
-        $('.result-list-toggle-button').on('click', (e) => {
-            $('.book-search-result-list').toggle(100, 'linear');
-        })
+    }
 
-    });
-</script>
+    // 結果を隠すか否か
+    const hide_search_result = (is_hide) => {
+        if (is_hide) {
+            $('.book-search-result-list').hide(100);
+            $('.result-list-toggle-button').hide(100);
+        }
 
-{% endblock %}
+        else {
+            $('.book-search-result-list').show(100);
+            $('.result-list-toggle-button').show(100);
+        }
 
+    }
 
-{% block extracss %}
-{{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/booklist.css' %}"/>
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/bookdetail.css' %}?20190707"/>
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/form.css' %}"/>
-<link rel="stylesheet" type="text/css" href="{% static 'book/css/animation.css' %}"/>
+    ;
+    // toggleボタン
+    $('.result-list-toggle-button').hide();
+
+    $('.result-list-toggle-button').on('click', (e) => {
+        $('.book-search-result-list').toggle(100, 'linear');
+    }
+
+    )
+}
+
+);
+
+</script> {
+    % endblock %
+}
+
+{
+    % block extracss %
+}
+
+{
+    {
+        block.super
+    }
+
+}
+
+<link rel="stylesheet"type="text/css"href="{% static 'book/css/booklist.css' %}"/>
+<link rel="stylesheet"type="text/css"href="{% static 'book/css/bookdetail.css' %}?20190707"/>
+<link rel="stylesheet"type="text/css"href="{% static 'book/css/form.css' %}"/>
+<link rel="stylesheet"type="text/css"href="{% static 'book/css/animation.css' %}"/>
 
 
 <style>
-    .container {
-        max-width: 100%;
-    }
+.container {
+    max-width: 100%;
+}
 
-    .lib-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+.lib-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 100px - 67px);
+}
 
+.lib-section-left-header {
+    padding: 20px 50px;
+    padding-bottom: 0;
+}
+
+.lib-section-left-title {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.4px;
+    padding-left: 20px;
+}
+
+.lib-section-left-sub-title {
+    padding: 0 0 15px 0;
+    font-size: 0.9rem;
+    padding-left: 20px;
+}
+
+.lib-section-left-header-border {
+    margin: 0 auto;
+    background-color: #404040;
+    width: 100%;
+    height: 2px;
+}
+
+.want-form-wrapper {
+    background-color: #F2F2F2;
+    max-width: 100%;
+    margin: 0 50px;
+    padding: 20px 0;
+    border-radius: 10px;
+}
+
+.want-book-list {
+
+    /*max-width: 100%;*/
+    padding: 30px 0;
+}
+
+.want-book-list .item {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.want-book-list .item-left img {
+    width: 150px;
+    border: #c2c0c2 1px solid;
+}
+
+.want-book-list .item-left {
+}
+
+.want-book-list .item-right {
+    flex: 1;
+    padding: 5px 30px;
+}
+
+.want-book-list .title {
+    font-size: 1.5rem;
+}
+
+.want-book-list .author, .want-book-list .caption {
+    font-size: 0.9rem;
+}
+
+.want-book-list .author {
+    padding-top: 0.1rem;
+}
+
+.want-book-list .caption {
+    padding-top: 0.3rem;
+}
+
+.title input, .author input, .caption textarea {
+    width: 100%;
+}
+
+.title-textbox {
+    margin-top: 0px;
+}
+
+.author-textbox {
+    margin-top: 20px;
+}
+
+.want-submit-wrapper {
+    padding-top: 20px;
+}
+
+.want-submit {
+    width: 62%;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.item-left.item-left-form img {
+    height: 250px;
+    width: auto;
+}
+
+.want-form-wrapper-small {
+    background-color: #F2F2F2;
+    max-width: 100%;
+    margin: 20px 50px;        /*padding: 20px 0;*/
+    border-radius: 3px;
+}
+
+.want-form-wrapper-small .item {
+    max-width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 0;
+    margin: 0 auto;
+}
+
+.title-textbox-small {
+    flex: 1;
+    min-width: 300px;
+}
+
+.want-submit-wrapper-small {
+    width: 230px;
+    display: flex;
+}
+
+.want-search-small {
+    font-size: 0.9rem;
+    height: 47px;
+    width: 100px;
+    padding: 11px;
+}
+
+.want-submit-text-small {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    height: 47px;
+    padding: 11px;
+}
+
+.book-search-result-list {
+
+    /*transition-duration: 1s;*/
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.book-search-result-item {
+    width: 80%;
+    margin-left: 6%;
+    margin-bottom: 14px;
+    display: flex;
+}
+
+.res-thumbnail img {
+    width: 90px;
+    height: auto;
+}
+
+.res-right {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.res-right div {
+    min-width: 90px;
+}
+
+.res-title {
+    overflow: hidden;
+}
+
+.res-author {
+    font-size: 0.8rem;
+}
+
+.res-publisher {
+    font-size: 0.8rem;
+}
+
+.result-list-toggle-button {
+    width: 100%;
+    text-align: center;        /*border: darkgray 1px solid;*/
+    position: relative;
+    height: 23px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.result-toggle-icon {
+    position: absolute;
+    font-size: 51px;
+    color: #404040;
+    top: -15px;
+}
+
+.res-button-wrapper {
+    margin: 30% 10px;
+}
+
+.res-button-reflect {
+    background-color: #2E8DD5;
+}
+
+.res-button-reflect:hover {
+    background-color: #0066C0;
+}
+
+.small-disabled.disabled, .small-disabled.disabled:hover {
+    border-color: #C6C6C6;
+    background-color: #C6C6C6;
+    cursor: default;
+}
+
+@media screen and (max-width:450px) {
     .lib-section-left-header {
-        padding: 20px 50px;
-        padding-bottom: 0;
-    }
-
-    .lib-section-left-title {
-        font-family: 'Fira Sans', sans-serif;
-        font-size: 2rem;
-        font-weight: bold;
-        font-style: italic;
-        letter-spacing: 0.4px;
-        padding-left: 20px;
-    }
-
-    .lib-section-left-sub-title {
-        padding: 0 0 15px 0;
-        font-size: 0.9rem;
-        padding-left: 20px;
-    }
-
-    .lib-section-left-header-border {
-        margin: 0 auto;
-        background-color: #404040;
-        width: 100%;
-        height: 2px;
-    }
-
-    .want-form-wrapper {
-        background-color: #F2F2F2;
-        max-width: 100%;
-        margin: 0 50px;
-        padding: 20px 0;
-        border-radius: 10px;
-    }
-
-    .want-book-list {
-        /*max-width: 100%;*/
-        padding: 30px 0;
-    }
-
-    .want-book-list .item {
-        max-width: 80%;
-        margin: 0 auto;
-        padding: 20px 0;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .want-book-list .item-left img {
-        width: 150px;
-        border: #c2c0c2 1px solid;
-    }
-
-    .want-book-list .item-left {
-    }
-
-    .want-book-list .item-right {
-        flex: 1;
-        padding: 5px 30px;
-    }
-
-    .want-book-list .title {
-        font-size: 1.5rem;
-    }
-
-    .want-book-list .author, .want-book-list .caption {
-        font-size: 0.9rem;
-    }
-
-    .want-book-list .author {
-        padding-top: 0.1rem;
-    }
-
-    .want-book-list .caption {
-        padding-top: 0.3rem;
-    }
-
-    .title input, .author input, .caption textarea {
-        width: 100%;
-    }
-
-    .title-textbox {
-        margin-top: 0px;
-    }
-
-    .author-textbox {
-        margin-top: 20px;
-    }
-
-    .want-submit-wrapper {
-        padding-top: 20px;
-    }
-
-    .want-submit {
-        width: 62%;
-        margin-top: 20px;
-        font-size: 1.2em;
-    }
-
-    .item-left.item-left-form img {
-        height: 250px;
-        width: auto;
+        margin: 20px 30px;
+        padding: 0px;
     }
 
     .want-form-wrapper-small {
-        background-color: #F2F2F2;
-        max-width: 100%;
-        margin: 20px 50px;
-        /*padding: 20px 0;*/
-        border-radius: 3px;
+        margin: 20px 30px;
+        padding: 10px;
+    }
+
+    #title-input-small {
+        width: 100%;
     }
 
     .want-form-wrapper-small .item {
-        max-width: 90%;
-        display: flex;
-        padding: 5px 0;
-        margin: 0 auto;
-    }
-
-    .title-textbox-small {
-        flex: 1;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
     }
 
     .want-submit-wrapper-small {
-        width: 230px;
-        display: flex;
-    }
-
-    .want-search-small {
-        font-size: 0.9rem;
-        height: 47px;
-        width: 100px;
-        padding: 11px;
-    }
-
-    .want-submit-text-small {
-        margin-left: 10px;
-        font-size: 0.9rem;
-        height: 47px;
-        padding: 11px;
-    }
-
-    .book-search-result-list {
-        /*transition-duration: 1s;*/
-        max-height: 50vh;
-        overflow: auto;
-    }
-
-    .book-search-result-item {
-        width: 80%;
-        margin-left: 6%;
-        margin-bottom: 14px;
-        display: flex;
-    }
-
-    .res-thumbnail img {
-        width: 90px;
-        height: auto;
-    }
-
-    .res-right {
-        padding-left: 20px;
-        flex: 1;
-    }
-
-    .res-title {
-    }
-
-    .res-author {
-        font-size: 0.8rem;
-    }
-
-    .res-publisher {
-        font-size: 0.8rem;
-    }
-
-    .result-list-toggle-button {
-        width: 100%;
-        text-align: center;
-        /*border: darkgray 1px solid;*/
-        position: relative;
-        height: 23px;
-        overflow: hidden;
-        cursor: pointer;
-    }
-
-    .result-toggle-icon {
-        position: absolute;
-        font-size: 51px;
-        color: #404040;
-        top: -15px;
+        margin-top: 10px;
     }
 
     .res-button-wrapper {
-        margin: 30% 10px;
+        margin: 20px 0 20px 95%;
     }
 
-    .res-button-reflect {
-        background-color: #2E8DD5;
-    }
+    /*    .mv-textbox input[type="text"] ~ label{
+    font-size: 1rem;
+        }
+    */
+}
 
-    .res-button-reflect:hover {
-        background-color: #0066C0;
-    }
-
-    .small-disabled.disabled, .small-disabled.disabled:hover {
-        border-color: #C6C6C6;
-        background-color: #C6C6C6;
-        cursor: default;
-    }
-
-
-</style>
-{% endblock %}
+</style> {
+    % endblock %
+}
