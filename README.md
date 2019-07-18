@@ -1,6 +1,30 @@
 ![image](https://user-images.githubusercontent.com/17490886/59975693-c23fd480-95f5-11e9-821e-fe7a3861f615.png)
 
-研究室、少人数の仲間内で使うための電子図書館、電子ビューワーWebサイト
+**私的利用の範囲でPDFを共有し、閲覧するための電子図書館アプリ。**
+
+
+
+# [Demo](http://silver.mind.meiji.ac.jp:65000/)
+
+上記リンク先より（※ [パブー](http://p.booklog.jp/)の無料PDFを適当に入れました）
+
+リンク切れの場合はIssueへ
+
+
+# Feature
+
+- [x] PDFアップロード
+- [x] PDF（zip）ダウンロード
+- [x] PDFブラウザ閲覧
+- [x] タグ機能
+- [x] 検索機能
+  - [x] タイトル検索
+  - [x] タグ検索
+- [x] モバイル対応
+
+| HOME                                                         | DETAIL                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src='http://ww2.sinaimg.cn/large/006tNc79gy1g54iwcn1zvj30u00ypkbi.jpg'/> | <img src='http://ww1.sinaimg.cn/large/006tNc79gy1g54irr7kfnj30u00y0aqb.jpg'/> |
 
 
 
@@ -41,12 +65,3 @@ $ sh bin/docker-compose-build-run.sh
 ```python
 import ipdb; ipdb.set_trace();
 ```
-
-
-
-# DEMO
-
-[こちらにデモを置きました](http://silver.mind.meiji.ac.jp:65000/)（※ [パブー](http://p.booklog.jp/)の無料PDFを適当に入れました）
-
-適当にいじって遊んでみてください。リンク切れは syunyooo(AT)gmail(dot)com へ。
-
