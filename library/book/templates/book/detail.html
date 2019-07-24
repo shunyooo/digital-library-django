@@ -7,6 +7,12 @@ WSL-LIB| {{ object.title }}
 
 {% block content %}
 
+<template id="edit-a">
+    <a href="{% url 'book:update' book.id %}" class="tag-edit-a"><i class="material-icons tag-edit-icon">
+        edit
+    </i><span class="tag-edit-text">編集する</span></a>
+</template>
+
 <div class="book-detail">
     <div class="book-image-wrap lazy-container">
         {% if object.thumbnail_image %}
@@ -19,19 +25,17 @@ WSL-LIB| {{ object.title }}
 
     <div class="detail-right">
         <div class="detail-right-header">
-            <ul class="tags">
+            <ul class="tags add-edit-a">
                 {% for tag in object.tag.all %}
                 <li class="tag-item"><a href="{% url 'book:list' %}?tag={{tag.content}}">{{tag.content}}<span>{{tag.book_count}}</span></a>
                 </li>
                 {% endfor %}
             </ul>
-            <a href="{% url 'book:update' book.id %}" class="tag-edit-a"><i class="material-icons tag-edit-icon">
-                edit
-            </i><span class="tag-edit-text">編集する</span></a>
+            
         </div>
 
         <div class="title">
-            {{ object.title }}
+            <span class="add-edit-a">{{ object.title }}</span>
         </div>
         <div class="authors-wrap">
             {% for author in object.author.all %}
@@ -48,7 +52,7 @@ WSL-LIB| {{ object.title }}
                 </li>
             </ul>
 
-            <div class="description" >
+            <div class="description add-edit-a" >
                 {% if object.description %}
                     {{ object.description }}
                 {% endif %}
@@ -118,6 +122,18 @@ WSL-LIB| {{ object.title }}
                 container: container,
             });
         });
+
+        const edit_el = $('#edit-a')[0].content
+        const edit_clone = document.importNode(edit_el, true);
+        $('.add-edit-a').append(edit_clone)
+        console.log($('.add-edit-a'));
+        console.log(edit_clone);
+
+        
+        // const set_isbn_content = () => {
+        //     $input_isbn.parent().parent().after(isbn_clone);
+        // }
+
 
     });
 </script>
