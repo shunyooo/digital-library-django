@@ -22,13 +22,23 @@
 }
 
 .lib-section-header {
-    /*padding: 0 20px 10px 20px;*/
+    width: 18rem;
+    margin: 0 auto;
+}
+
+.lib-section-a {
+    display: block;
+    color: #404040;
+}
+
+.lib-section-a:hover {
+    color: #404040;
 }
 
 .lib-section-header-border {
     margin: 0 auto;
     background-color: #404040;
-    width: 8%;
+    width: 50%;
     height: 5px;
 }
 

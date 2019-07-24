@@ -49,7 +49,8 @@ class HomeView(View):
                 "section_sub_title": f"{tag.content}のタグが付いている本たち",
                 "book_list": tag.books.all()[:10],
                 "book_key": "tag",
-                'border_bottom': 'border-brown'
+                "tag_key": tag.content,
+                'border_bottom': 'border-brown',
             })
 
         context = {'section_list': section_list}

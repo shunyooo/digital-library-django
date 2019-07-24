@@ -10,11 +10,16 @@ WSL-LIB| HOME
 {% for section in section_list %}
 <div class="lib-section {{section.bg_color}}">
     <div class="lib-section-header clearfix">
-        <div class="lib-section-title">{{section.section_title}}</div>
-        {% if section.section_sub_title %}
-        <div class="lib-section-sub-title">{{section.section_sub_title}}</div>
-        {% endif %}
-        <div class="lib-section-header-border"></div>
+        <a class="lib-section-a" 
+            {% if section.section_type == 'book_list' %}
+            href="{% url 'book:list' %}{% if section.book_key == 'tag' %}?tag={{section.tag_key}}{% endif %}"
+            {%endif%}>
+            <div class="lib-section-title">{{section.section_title}}</div>
+            {% if section.section_sub_title %}
+                <div class="lib-section-sub-title">{{section.section_sub_title}}</div>
+            {% endif %}
+            <div class="lib-section-header-border"></div>
+        </a>
     </div>
 
 
@@ -36,7 +41,7 @@ WSL-LIB| HOME
 
         {% if section.book_list|length == 10 %}
         <li class="book-more-item">
-            <a href="{% url 'book:list' %}{% if book_section.key == 'tag' %}?tag={{section.book_key}}{% endif %}">
+            <a href="{% url 'book:list' %}{% if section.book_key == 'tag' %}?tag={{section.tag_key}}{% endif %}">
                 <i class="more-arrow material-icons">
                     arrow_forward_ios
                 </i>
