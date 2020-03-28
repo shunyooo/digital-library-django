@@ -3,14 +3,6 @@
 **私的利用の範囲でPDFを共有し、閲覧するための電子図書館アプリ。**
 
 
-
-# [Demo](http://silver.mind.meiji.ac.jp:65000/)
-
-上記リンク先より（※ [パブー](http://p.booklog.jp/)の無料PDFを適当に入れました）
-
-リンク切れの場合はIssueへ
-
-
 # Feature
 
 - [x] PDFアップロード
