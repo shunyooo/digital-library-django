@@ -17,7 +17,7 @@ celery==4.2.1
 django-celery-results==1.0.4
 redis==3.2.1
 django-redis==4.9.0
-ipython==7.1.1
+ipython==7.16.3
 django-bootstrap4==0.0.8
 django-extensions==2.1.6
 jupyter==1.0.0
