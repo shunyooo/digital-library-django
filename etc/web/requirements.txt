@@ -14,7 +14,7 @@ Pillow==5.3.0
 tqdm==4.28.1
 django-bulk-update==2.2.0
 celery==4.2.1
-django-celery-results==1.0.4
+django-celery-results==2.4.0
 redis==3.2.1
 django-redis==4.9.0
 ipython==7.1.1
